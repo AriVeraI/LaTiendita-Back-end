@@ -1,0 +1,23 @@
+# --- Gradle ---
+.gradle/
+/build/
+.configuration-cache/
+
+# --- Java ---
+*.class
+*.log
+*.jar
+*.war
+*.ear
+
+# --- IntelliJ IDEA ---
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/usageStatistics.xml
+.idea/dictionaries
+.idea/shelf
+out/
+
+# --- Sistema Operativo ---
+.DS_Store
+Thumbs.db
