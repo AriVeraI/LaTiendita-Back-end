@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/LaTiendita-Back-end.iml" filepath="$PROJECT_DIR$/.idea/LaTiendita-Back-end.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/tyback-end.iml" filepath="$PROJECT_DIR$/.idea/tyback-end.iml" />
     </modules>
   </component>
 </project>
