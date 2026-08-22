@@ -4,15 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eff82dd2-4545-41b4-9563-94bf7e3e89ab" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/pi.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+    <list default="true" id="bf93b4b7-117e-4a3a-97de-bb5a5d474c7c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/config/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/controller/CategoriaController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/controller/ProductoHasCategoriaController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/controller/SubcategoriaController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/dto/CategoriaDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/dto/ProductoHasCategoriaDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/dto/SubcategoriaDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/model/Categoria.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/model/ProductoHasCategoria.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/model/ProductoHasCategoriaId.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/model/Subcategoria.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/repository/CategoriaRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/repository/ProductoHasCategoriaRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/repository/SubcategoriaRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/service/CategoriaService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/service/ProductoHasCategoriaService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/service/SubcategoriaService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tyback-end/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/tyback-end/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tyback-end/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/tyback-end/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,38 +63,47 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="Develop" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/model/Categoria.java" root0="SKIP_INSPECTION" />
+  </component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 8
+  &quot;associatedIndex&quot;: 4
 }</component>
-  <component name="ProjectId" id="3IElAdNnJrcMqYu44YzDKkBU2e2" />
+  <component name="ProjectId" id="3IEo2c7sV0yy6C2PIhKpsVoFf1m" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Gradle.tyback-end [:com.tienditayeya.tyback_end.TybackEndApplication.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.tyback-end.executor&quot;: &quot;Run&quot;,
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Develop&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Git/tyback-end&quot;
+    &quot;git-widget-placeholder&quot;: &quot;santi&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;ChangesTree.GroupingKeys&quot;: [
+      &quot;repository&quot;
+    ]
   }
 }</component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="eff82dd2-4545-41b4-9563-94bf7e3e89ab" name="Changes" comment="" />
-      <created>1787337467133</created>
+      <changelist id="bf93b4b7-117e-4a3a-97de-bb5a5d474c7c" name="Changes" comment="" />
+      <created>1787338882188</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1787337467133</updated>
+      <updated>1787338882188</updated>
     </task>
     <servers />
   </component>
