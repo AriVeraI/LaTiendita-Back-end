@@ -1,9 +1,7 @@
 package com.tienditayeya.tyback_end.controller;
 
-
-import com.tienditayeya.tyback_end.dto.DireccionesDTO;
-import com.tienditayeya.tyback_end.service.DireccionesService;
-import jakarta.validation.Valid;
+import com.tienditayeya.tyback_end.dto.DetallePedidoDTO;
+import com.tienditayeya.tyback_end.service.DetallePedidoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,38 +9,43 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/direcciones")
-public class DireccionController {
+@RequestMapping("/api/detalles-pedido")
+public class DetallePedidoController {
 
-    private final DireccionesService direccionService;
+    private final DetallePedidoService service;
 
-    public DireccionController(DireccionesService direccionService) {
-        this.direccionService = direccionService;
+    public DetallePedidoController(DetallePedidoService service) {
+        this.service = service;
     }
 
     @GetMapping
-    public ResponseEntity<List<DireccionesDTO>> listarTodas() {
-        return ResponseEntity.ok(direccionService.listarTodas());
+    public ResponseEntity<List<DetallePedidoDTO>> getAll() {
+        return ResponseEntity.ok(service.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DireccionesDTO> obtenerPorId(@PathVariable Integer id) {
-        return ResponseEntity.ok(direccionService.obtenerPorId(id));
+    public ResponseEntity<DetallePedidoDTO> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(service.findById(id));
+    }
+
+    @GetMapping("/pedido/{pedidoId}")
+    public ResponseEntity<List<DetallePedidoDTO>> getByPedidoId(@PathVariable Long pedidoId) {
+        return ResponseEntity.ok(service.findByPedidoId(pedidoId));
     }
 
     @PostMapping
-    public ResponseEntity<DireccionesDTO> crear(@Valid @RequestBody DireccionesDTO dto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(direccionService.crear(dto));
+    public ResponseEntity<DetallePedidoDTO> create(@RequestBody DetallePedidoDTO dto) {
+        return new ResponseEntity<>(service.save(dto), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<DireccionesDTO> actualizar(@PathVariable Integer id, @Valid @RequestBody DireccionesDTO dto) {
-        return ResponseEntity.ok(direccionService.actualizar(id, dto));
+    public ResponseEntity<DetallePedidoDTO> update(@PathVariable Long id, @RequestBody DetallePedidoDTO dto) {
+        return ResponseEntity.ok(service.update(id, dto));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminar(@PathVariable Integer id) {
-        direccionService.eliminar(id);
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        service.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 }
