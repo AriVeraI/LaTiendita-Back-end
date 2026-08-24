@@ -4,50 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bf93b4b7-117e-4a3a-97de-bb5a5d474c7c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/config/SecurityConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/controller/CategoriaController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/controller/DetallePedidoController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/controller/ProductoController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/controller/ProductoHasCategoriaController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/controller/SubcategoriaController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/controller/VariantesController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/controller/VariantesHPController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/dto/CategoriaDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/dto/DireccionesDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/dto/ProductoHasCategoriaDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/dto/SubcategoriaDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/dto/VariantesHPRequestDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/dto/VariantesRequestDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/model/Categoria.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/model/DetallePedido.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/model/Direcciones.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/model/Producto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/model/ProductoHasCategoria.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/model/ProductoHasCategoriaId.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/model/Subcategoria.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/model/Variantes.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/model/VariantesHP.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/repository/CategoriaRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/repository/DetallePedidoRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/repository/DireccionesRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/repository/ProductoHasCategoriaRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/repository/ProductoRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/repository/SubcategoriaRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/repository/VariantesHPRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/repository/VariantesRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/service/CategoriaService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/service/DetallePedidoService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/service/DireccionesService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/service/ProductoHasCategoriaService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/service/ProductoService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/service/SubcategoriaService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/service/VariantesHPService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/service/VariantesService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore.txt" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tyback-end/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/tyback-end/src/main/resources/application.properties" afterDir="false" />
-    </list>
+    <list default="true" id="bf93b4b7-117e-4a3a-97de-bb5a5d474c7c" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -110,7 +67,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "Merging ErnestoNueva",
+    "git-widget-placeholder": "ErnestoNueva",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true"
   },
