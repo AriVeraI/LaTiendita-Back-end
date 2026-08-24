@@ -1,21 +1,15 @@
 package com.tienditayeya.tyback_end.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "variantes_has_productos")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class VariantesHP {
 
     @EmbeddedId
-    private VariantesHPId id = new VariantesHPId();
+    private VariantesHPId id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("variantesIdVariantes")
@@ -27,19 +21,89 @@ public class VariantesHP {
     @JoinColumn(name = "productos_id_productos")
     private Producto producto;
 
-    // Subclase requerida por JPA para llaves primarias compuestas
+    // Constructor vacío por defecto
+    public VariantesHP() {
+        this.id = new VariantesHPId();
+    }
+
+    // Constructor con parámetros
+    public VariantesHP(VariantesHPId id, Variantes variantes, Producto producto) {
+        this.id = id != null ? id : new VariantesHPId();
+        this.variantes = variantes;
+        this.producto = producto;
+    }
+
+    // Getters y Setters
+    public VariantesHPId getId() {
+        return id;
+    }
+
+    public void setId(VariantesHPId id) {
+        this.id = id;
+    }
+
+    public Variantes getVariantes() {
+        return variantes;
+    }
+
+    public void setVariantes(Variantes variantes) {
+        this.variantes = variantes;
+    }
+
+    public Producto getProducto() {
+        return producto;
+    }
+
+    public void setProducto(Producto producto) {
+        this.producto = producto;
+    }
+
+    @Override
+    public String toString() {
+        return "VariantesHP{" +
+                "id=" + id +
+                ", variantes=" + variantes +
+                ", producto=" + producto +
+                '}';
+    }
+
+    // Subclase Embeddable para la Llave Compuesta
     @Embeddable
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
     public static class VariantesHPId implements Serializable {
+
         @Column(name = "variantes_id_variantes")
         private Long variantesIdVariantes;
 
         @Column(name = "productos_id_productos")
-        private Long productosIdProductos;
+        private Integer productosIdProductos; // Integer porque Producto usa Integer en su ID
 
-        
+        public VariantesHPId() {
+        }
+
+        public VariantesHPId(Long variantesIdVariantes, Integer productosIdProductos) {
+            this.variantesIdVariantes = variantesIdVariantes;
+            this.productosIdProductos = productosIdProductos;
+        }
+
+        public Long getVariantesIdVariantes() {
+            return variantesIdVariantes;
+        }
+
+        public void setVariantesIdVariantes(Long variantesIdVariantes) {
+            this.variantesIdVariantes = variantesIdVariantes;
+        }
+
+        public Integer getProductosIdVariantes() { // Manteniendo consistencia por si acaso
+            return productosIdProductos;
+        }
+
+        public Integer getProductosIdProductos() {
+            return productosIdProductos;
+        }
+
+        public void setProductosIdProductos(Integer productosIdProductos) {
+            this.productosIdProductos = productosIdProductos;
+        }
 
         @Override
         public boolean equals(Object o) {
@@ -54,6 +118,13 @@ public class VariantesHP {
         public int hashCode() {
             return Objects.hash(variantesIdVariantes, productosIdProductos);
         }
-    }
 
+        @Override
+        public String toString() {
+            return "VariantesHPId{" +
+                    "variantesIdVariantes=" + variantesIdVariantes +
+                    ", productosIdProductos=" + productosIdProductos +
+                    '}';
+        }
+    }
 }

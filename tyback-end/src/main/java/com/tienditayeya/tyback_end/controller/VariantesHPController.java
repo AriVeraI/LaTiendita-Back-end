@@ -1,4 +1,5 @@
 package com.tienditayeya.tyback_end.controller;
+
 import com.tienditayeya.tyback_end.dto.VariantesHPRequestDTO;
 import com.tienditayeya.tyback_end.model.VariantesHP;
 import com.tienditayeya.tyback_end.service.VariantesHPService;
@@ -23,7 +24,7 @@ public class VariantesHPController {
     }
 
     @GetMapping("/producto/{productoId}")
-    public List<VariantesHP> getByProducto(@PathVariable Long productoId) {
+    public List<VariantesHP> getByProducto(@PathVariable Integer productoId) { // Integer
         return service.findByProductoId(productoId);
     }
 
@@ -35,7 +36,7 @@ public class VariantesHPController {
 
     @DeleteMapping("/{variantesId}/{productoId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long variantesId, @PathVariable Long productoId) {
+    public void delete(@PathVariable Long variantesId, @PathVariable Integer productoId) { // Integer
         service.delete(variantesId, productoId);
     }
 }
