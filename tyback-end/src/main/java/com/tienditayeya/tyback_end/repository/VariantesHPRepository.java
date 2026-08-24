@@ -7,6 +7,6 @@ import java.util.List;
 
 @Repository
 public interface VariantesHPRepository extends JpaRepository<VariantesHP, VariantesHP.VariantesHPId> {
-    List<VariantesHP> findById_ProductosIdProductos(Long productoId);
+    List<VariantesHP> findById_ProductosIdProductos(Integer productoId);
     List<VariantesHP> findById_VariantesIdVariantes(Long varianteId);
 }
