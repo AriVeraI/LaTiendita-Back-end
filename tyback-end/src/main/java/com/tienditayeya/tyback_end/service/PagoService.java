@@ -1,12 +1,33 @@
 package com.tienditayeya.tyback_end.service;
 
-import com.tienditayeya.tyback_end.dto.PagoDTO;
 import java.util.List;
+import com.tienditayeya.tyback_end.model.Pago;
+import com.tienditayeya.tyback_end.repository.PagoRepository;
+import org.springframework.stereotype.Service;
+import java.util.Optional;
 
-public interface PagoService {
-    List<PagoDTO> listarTodos();
-    PagoDTO obtenerPorId(Integer id);
-    PagoDTO guardar(PagoDTO dto);
-    PagoDTO actualizar(Integer id, PagoDTO dto);
-    void eliminar(Integer id);
+@Service
+public class PagoService {
+
+    private final PagoRepository pagoRepository;
+
+    public PagoService(PagoRepository pagoRepository) {
+        this.pagoRepository = pagoRepository;
+    }
+
+    public Pago guardarPago(Pago pago) {
+        return pagoRepository.save(pago);
+    }
+
+    public List<Pago> obtenerTodos() {
+        return pagoRepository.findAll();
+    }
+
+    public Optional<Pago> obtenerPorId(Long id) {
+        return pagoRepository.findById(id);
+    }
+
+    public void eliminarPago(Long id) {
+        pagoRepository.deleteById(id);
+    }
 }
