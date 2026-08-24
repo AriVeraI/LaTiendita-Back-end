@@ -1,7 +1,7 @@
 package com.tienditayeya.tyback_end.service;
 
 import com.tienditayeya.tyback_end.dto.VariantesHPRequestDTO;
-import com.tienditayeya.tyback_end.model.Productos;
+import com.tienditayeya.tyback_end.model.Producto;
 import com.tienditayeya.tyback_end.model.Variantes;
 import com.tienditayeya.tyback_end.model.VariantesHP;
 import com.tienditayeya.tyback_end.repository.VariantesHPRepository;
@@ -15,13 +15,13 @@ import java.util.List;
 @Service
 public class VariantesHPService {private final VariantesHPRepository repository;
     private final VariantesService variantesService;
-    private final ProductosService productosService;
+    private final ProductoService productoService;
 
     public VariantesHPService(VariantesHPRepository repository, VariantesService variantesService,
-                              ProductosService productosService) {
+                              ProductoService productoService) {
         this.repository = repository;
         this.variantesService = variantesService;
-        this.productosService = productosService;
+        this.productoService = productoService;
     }
 
     @Transactional(readOnly = true)
@@ -37,13 +37,13 @@ public class VariantesHPService {private final VariantesHPRepository repository;
     @Transactional
     public VariantesHP create(VariantesHPRequestDTO dto) {
         Variantes variantes = variantesService.findById(dto.getVarianteId());
-        Productos producto = productosService.findById(dto.getProductoId());
+        Producto producto = productoService.findById(dto.getProductoId());
 
         VariantesHP relacion = new VariantesHP();
         relacion.setVariantes(variantes);
-        relacion.setProductos(producto);
+        relacion.setProducto(producto);
         relacion.getId().setVariantesIdVariantes(variantes.getIdVariantes());
-        relacion.getId().setProductosIdProductos(producto.getIdProductos()); // Asegúrarnos de usar el ID correcto de la entidad Productos
+        relacion.getId().setProductosIdProductos(producto.getIdProducto()); // Asegúrarnos de usar el ID correcto de la entidad Productos
 
         return repository.save(relacion);
     }

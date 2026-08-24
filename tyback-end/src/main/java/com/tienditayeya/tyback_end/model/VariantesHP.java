@@ -25,7 +25,7 @@ public class VariantesHP {
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("productosIdProductos")
     @JoinColumn(name = "productos_id_productos")
-    private Productos productos;
+    private Producto producto;
 
     // Subclase requerida por JPA para llaves primarias compuestas
     @Embeddable
@@ -38,6 +38,8 @@ public class VariantesHP {
 
         @Column(name = "productos_id_productos")
         private Long productosIdProductos;
+
+        
 
         @Override
         public boolean equals(Object o) {
