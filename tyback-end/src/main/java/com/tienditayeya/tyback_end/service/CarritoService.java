@@ -1,7 +1,11 @@
 package com.tienditayeya.tyback_end.service;
 
 import com.tienditayeya.tyback_end.dto.CarritoDTO;
+import com.tienditayeya.tyback_end.dto.CarritoDetalleDTO;
+import com.tienditayeya.tyback_end.dto.ItemCarritoDTO;
 import com.tienditayeya.tyback_end.model.Carrito;
+import com.tienditayeya.tyback_end.model.CarritoProducto;
+import com.tienditayeya.tyback_end.repository.CarritoProductoRepository;
 import com.tienditayeya.tyback_end.repository.CarritoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +19,9 @@ public class CarritoService {
 
     @Autowired
     private CarritoRepository carritoRepository;
+
+    @Autowired
+    private CarritoProductoRepository carritoProductoRepository;
 
     // Obtener todos los carritos convertidos a DTO
     public List<CarritoDTO> obtenerTodos() {
@@ -51,6 +58,47 @@ public class CarritoService {
         }
         carritoRepository.deleteById(id);
     }
+
+    //Obtener o crear
+    public Carrito obtenerOACrearCarritoPorUsuario(int idUsuario) {
+        // Busca si el usuario ya cuenta con un carrito activo
+        return carritoRepository.findByIdUsuario(idUsuario)
+                .orElseGet(() -> {
+                    // Si no existe, crea uno nuevo
+                    Carrito nuevoCarrito = new Carrito();
+                    nuevoCarrito.setIdUsuario(idUsuario);
+                    nuevoCarrito.setFechaCracion(LocalDateTime.now());
+                    nuevoCarrito.setFechaActualizacion(LocalDateTime.now());
+                    return carritoRepository.save(nuevoCarrito);
+                });
+    }
+    //
+    public CarritoDetalleDTO obtenerCarritoDetalladoPorUsuario(int idUsuario) {
+        // 1. Obtiene o crea el carrito del usuario
+        Carrito carrito = obtenerOACrearCarritoPorUsuario(idUsuario);
+
+        // 2. Busca los productos que pertenecen a este carrito
+        List<CarritoProducto> productosEnCarrito = carritoProductoRepository.findByCarritoIdCarrito(carrito.getIdCarrito());
+
+        // 3. Mapea la información hacia el DTO para el front-end
+        CarritoDetalleDTO detalleDTO = new CarritoDetalleDTO();
+        detalleDTO.setIdCarrito(carrito.getIdCarrito());
+        detalleDTO.setFechaCreacion(carrito.getFechaCracion());
+        detalleDTO.setIdUsuario(carrito.getIdUsuario());
+
+        List<ItemCarritoDTO> items = productosEnCarrito.stream().map(cp -> {
+            ItemCarritoDTO item = new ItemCarritoDTO();
+            item.setIdCarritoProductos(cp.getIdCarritoProductos());
+            item.setCantidad(cp.getCantidad());
+            item.setIdProducto(cp.getProductosIdProductos());
+            return item;
+        }).collect(Collectors.toList());
+
+        detalleDTO.setItems(items);
+
+        return detalleDTO;
+    }
+
 
     // Métodos auxiliares de mapeo (Entidad <-> DTO)
     private CarritoDTO convertirADTO(Carrito carrito) {
