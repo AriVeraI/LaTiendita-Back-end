@@ -11,22 +11,27 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/envios")
+@RequestMapping("/api/envios")
 public class EnvioController {
     private final EnvioService envioService;
-    private EnvioModel requets;
 
     public EnvioController(EnvioService envioService){
         this.envioService = envioService;
     }
 
     @PostMapping
-    public ResponseEntity<ResponseEnvioDTO> registrarEnvio(@Validated @RequestBody RequetsEnvioDTO request){
-        ResponseEnvioDTO nuevoEnvio = envioService.crearEnvio(requets);
+    public ResponseEntity<ResponseEnvioDTO> registrarEnvio(@Validated @RequestBody RequetsEnvioDTO requets){
+// 1. Convertir el DTO a la Entidad EnvioModel
+        EnvioModel nuevoEnvioModel = new EnvioModel();
+        // nuevoEnvioModel.setNumeroDeRastreo(requets.getNumeroDeRastreo()); // Asigna los campos de tu DTO
+
+        // 2. Pasar el modelo al servicio
+        ResponseEnvioDTO nuevoEnvio = envioService.crearEnvio(nuevoEnvioModel);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevoEnvio);
     }
 
-    @GetMapping("rastreo/{numeroDeRastreo}")
+    @GetMapping("/rastreo/{numeroDeRastreo}")
     public ResponseEntity<ResponseEnvioDTO> consultarPorRastreo(@PathVariable("numeroDeRastreo") Long numeroDeRastreo){
         ResponseEnvioDTO envio = envioService.obtenerNumeroRastreo(numeroDeRastreo);
         return ResponseEntity.ok(envio);
