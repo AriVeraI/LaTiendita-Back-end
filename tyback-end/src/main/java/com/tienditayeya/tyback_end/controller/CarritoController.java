@@ -2,6 +2,7 @@ package com.tienditayeya.tyback_end.controller;
 
 
 import com.tienditayeya.tyback_end.dto.CarritoDTO;
+import com.tienditayeya.tyback_end.dto.CarritoDetalleDTO;
 import com.tienditayeya.tyback_end.service.CarritoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,13 @@ public class CarritoController {
     public ResponseEntity<List<CarritoDTO>> listarCarritos() {
         List<CarritoDTO> carritos = carritoService.obtenerTodos();
         return ResponseEntity.ok(carritos);
+    }
+
+    //
+    @GetMapping("/usuario/{idUsuario}")
+    public ResponseEntity<CarritoDetalleDTO> obtenerCarritoPorUsuario(@PathVariable int idUsuario) {
+        CarritoDetalleDTO carritoDetalle = carritoService.obtenerCarritoDetalladoPorUsuario(idUsuario);
+        return ResponseEntity.ok(carritoDetalle);
     }
 
     // Endpoint para buscar por ID: GET /api/carritos/{id}
