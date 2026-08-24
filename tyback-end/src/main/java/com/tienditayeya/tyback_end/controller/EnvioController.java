@@ -20,14 +20,19 @@ public class EnvioController {
     }
 
     @PostMapping
-    public ResponseEntity<ResponseEnvioDTO> registrarEnvio(@Validated @RequestBody RequetsEnvioDTO requets){
-// 1. Convertir el DTO a la Entidad EnvioModel
+    public ResponseEntity<ResponseEnvioDTO> registrarEnvio(@Validated @RequestBody RequetsEnvioDTO requets) {
         EnvioModel nuevoEnvioModel = new EnvioModel();
-        // nuevoEnvioModel.setNumeroDeRastreo(requets.getNumeroDeRastreo()); // Asigna los campos de tu DTO
 
-        // 2. Pasar el modelo al servicio
+        // Asigna el valor del campo que Hibernate marca como nulo
+        nuevoEnvioModel.setEstadoDeEnvio(requets.estadoDeEnvio());
+
+        // Asigna el resto de campos correspondientes
+        nuevoEnvioModel.setNumeroDeRastreo(requets.numeroDeRastreo());
+        nuevoEnvioModel.setPaqueteria(requets.paqueteria());
+        nuevoEnvioModel.setFechaDespacho(requets.fechaDespacho());
+        nuevoEnvioModel.setFechaEntregaEstimada(requets.fechaEntregaEstimada());
+
         ResponseEnvioDTO nuevoEnvio = envioService.crearEnvio(nuevoEnvioModel);
-
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevoEnvio);
     }
 
