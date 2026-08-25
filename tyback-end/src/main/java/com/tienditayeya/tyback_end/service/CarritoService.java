@@ -5,8 +5,10 @@ import com.tienditayeya.tyback_end.dto.CarritoDetalleDTO;
 import com.tienditayeya.tyback_end.dto.ItemCarritoDTO;
 import com.tienditayeya.tyback_end.model.Carrito;
 import com.tienditayeya.tyback_end.model.CarritoProducto;
+import com.tienditayeya.tyback_end.model.Producto;
 import com.tienditayeya.tyback_end.repository.CarritoProductoRepository;
 import com.tienditayeya.tyback_end.repository.CarritoRepository;
+import com.tienditayeya.tyback_end.repository.ProductoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -73,6 +75,9 @@ public class CarritoService {
                 });
     }
     //
+    @Autowired
+    private ProductoRepository productoRepository; // Asegúrate de tener este repositorio inyectado
+
     public CarritoDetalleDTO obtenerCarritoDetalladoPorUsuario(int idUsuario) {
         // 1. Obtiene o crea el carrito del usuario
         Carrito carrito = obtenerOACrearCarritoPorUsuario(idUsuario);
@@ -91,6 +96,16 @@ public class CarritoService {
             item.setIdCarritoProductos(cp.getIdCarritoProductos());
             item.setCantidad(cp.getCantidad());
             item.setIdProducto(cp.getProductosIdProductos());
+
+            // 4. Buscar la información del producto y asignarla al DTO del item
+            Producto producto = productoRepository.findById(cp.getProductosIdProductos()).orElse(null);
+
+            if (producto != null) {
+                item.setNombreProducto(producto.getNombreProducto());
+                item.setPrecioUnitario(producto.getPrecio());
+
+            }
+
             return item;
         }).collect(Collectors.toList());
 

@@ -1,9 +1,14 @@
 package com.tienditayeya.tyback_end.dto;
 
+import java.math.BigDecimal;
+
 public class ItemCarritoDTO {
     private Long idCarritoProductos;
     private int cantidad;
     private int idProducto;
+    private String nombreProducto;
+    private BigDecimal precioUnitario;
+
     // Aquí podrías agregar nombre, precio, imagen si gustas mapearlo desde tu tabla productos
 
     // Getters y Setters
@@ -14,5 +19,19 @@ public class ItemCarritoDTO {
     public int getIdProducto() { return idProducto; }
     public void setIdProducto(int idProducto) { this.idProducto = idProducto; }
 
+    public String getNombreProducto() {
+        return nombreProducto;
+    }
 
+    public void setNombreProducto(String nombreProducto) {
+        this.nombreProducto = nombreProducto;
+    }
+
+    public BigDecimal getPrecioUnitario() {
+        return precioUnitario;
+    }
+
+    public void setPrecioUnitario(BigDecimal precioUnitario) {
+        this.precioUnitario = precioUnitario;
+    }
 }
