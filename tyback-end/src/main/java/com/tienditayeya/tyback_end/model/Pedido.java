@@ -33,13 +33,13 @@ public class Pedido {
     // Relación ManyToOne con Direcciones
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "direcciones_id_direccion")
-    private Direccion direccion;
+    private Direcciones direccion;
 
     // Constructores
     public Pedido() {
     }
 
-    public Pedido(String numeroPedido, BigDecimal total, String estadoPedido, LocalDateTime fechaCreacionPedido, Usuario usuario, Direccion direccion) {
+    public Pedido(String numeroPedido, BigDecimal total, String estadoPedido, LocalDateTime fechaCreacionPedido, Usuario usuario, Direcciones direccion) {
         this.numeroPedido = numeroPedido;
         this.total = total;
         this.estadoPedido = estadoPedido;
@@ -97,11 +97,11 @@ public class Pedido {
         this.usuario = usuario;
     }
 
-    public Direccion getDireccion() {
+    public Direcciones getDireccion() {
         return direccion;
     }
 
-    public void setDireccion(Direccion direccion) {
+    public void setDireccion(Direcciones direccion) {
         this.direccion = direccion;
     }
 }

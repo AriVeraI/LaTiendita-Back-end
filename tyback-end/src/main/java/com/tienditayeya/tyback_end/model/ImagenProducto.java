@@ -1,26 +1,55 @@
 package com.tienditayeya.tyback_end.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "imagenes_productos")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class ImagenProducto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_imagenes_productos")
-    private Integer idImagenesProductos;
+    private Long idImagenesProductos; // Cambiado a Long
 
-    @Column(name = "url_imagen", length = 50, nullable = false)
+    @Column(name = "url_imagen", nullable = false, length = 100)
     private String urlImagen;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "productos_id_productos", nullable = false)
-    private Producto producto;
+    @Column(name = "productos_id_productos", nullable = false)
+    private Long productosIdProductos; // Cambiado a Long
+
+    // Constructor vacío (Obligatorio para JPA/Spring)
+    public ImagenProducto() {
+    }
+
+    //Constructor con todos los parámetros
+    public ImagenProducto(Long idImagenesProductos, String urlImagen, Long productosIdProductos) {
+        this.idImagenesProductos = idImagenesProductos;
+        this.urlImagen = urlImagen;
+        this.productosIdProductos = productosIdProductos;
+    }
+
+    // Getters y Setters
+    public Long getIdImagenesProductos() {
+        return idImagenesProductos;
+    }
+
+    public void setIdImagenesProductos(Long idImagenesProductos) {
+        this.idImagenesProductos = idImagenesProductos;
+    }
+
+    public String getUrlImagen() {
+        return urlImagen;
+    }
+
+    public void setUrlImagen(String urlImagen) {
+        this.urlImagen = urlImagen;
+    }
+
+    public Long getProductosIdProductos() {
+        return productosIdProductos;
+    }
+
+    public void setProductosIdProductos(Long productosIdProductos) {
+        this.productosIdProductos = productosIdProductos;
+    }
 }

@@ -16,6 +16,10 @@
 .idea/usageStatistics.xml
 .idea/dictionaries
 .idea/shelf
+.idea/gradle.xml
+.idea/misc.xml
+.idea/modules.xml
+*.iml
 out/
 
 # --- Sistema Operativo ---
