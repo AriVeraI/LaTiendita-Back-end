@@ -1,6 +1,6 @@
 package com.tienditayeya.tyback_end.dto;
 
-import org.antlr.v4.runtime.misc.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.Date;
 

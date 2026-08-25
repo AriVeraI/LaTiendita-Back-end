@@ -1,6 +1,5 @@
 package com.tienditayeya.tyback_end.controller;
 
-
 import com.tienditayeya.tyback_end.dto.DireccionesDTO;
 import com.tienditayeya.tyback_end.service.DireccionesService;
 import jakarta.validation.Valid;
@@ -26,7 +25,7 @@ public class DireccionesController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DireccionesDTO> obtenerPorId(@PathVariable Integer id) {
+    public ResponseEntity<DireccionesDTO> obtenerPorId(@PathVariable Long id) { // Cambiado a Long
         return ResponseEntity.ok(direccionService.obtenerPorId(id));
     }
 
@@ -36,12 +35,12 @@ public class DireccionesController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<DireccionesDTO> actualizar(@PathVariable Integer id, @Valid @RequestBody DireccionesDTO dto) {
+    public ResponseEntity<DireccionesDTO> actualizar(@PathVariable Long id, @Valid @RequestBody DireccionesDTO dto) { // Cambiado a Long
         return ResponseEntity.ok(direccionService.actualizar(id, dto));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminar(@PathVariable Integer id) {
+    public ResponseEntity<Void> eliminar(@PathVariable Long id) { // Cambiado a Long
         direccionService.eliminar(id);
         return ResponseEntity.noContent().build();
     }
