@@ -40,7 +40,7 @@ public class EnvioService {
 
     @Transactional
     public ResponseEnvioDTO obtenerNumeroRastreo(Long numeroDeRastreo){
-        return envioRepository.findByIdNumeroDeRastreo(numeroDeRastreo).map(this::convertirDTO)
+        return envioRepository.findByNumeroDeRastreo(numeroDeRastreo).map(this::convertirDTO)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "No se encontro ningún envío con el número de ratreo " + numeroDeRastreo));
     }
