@@ -3,6 +3,7 @@ package com.tienditayeya.tyback_end.controller;
 
 import com.tienditayeya.tyback_end.dto.CarritoDTO;
 import com.tienditayeya.tyback_end.dto.CarritoDetalleDTO;
+import com.tienditayeya.tyback_end.model.Carrito;
 import com.tienditayeya.tyback_end.service.CarritoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,6 +39,28 @@ public class CarritoController {
     public ResponseEntity<CarritoDTO> obtenerCarritoPorId(@PathVariable int id) {
         try {
             CarritoDTO carrito = carritoService.obtenerPorId(id);
+            return ResponseEntity.ok(carrito);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+    //
+    @GetMapping("usuario/carrito/{id}")
+    public ResponseEntity<Carrito> obtenerCarritoDelUsuario(@PathVariable int id) {
+        try {
+            Carrito carrito = carritoService.obtenerOACrearCarritoPorUsuario(id);
+            return ResponseEntity.ok(carrito);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+    //
+    @GetMapping("usuario/detalle/{id}")
+    public ResponseEntity<CarritoDetalleDTO> obtenerDetalleDeCarrito(@PathVariable int id) {
+        try {
+            CarritoDetalleDTO carrito = carritoService.obtenerCarritoDetalladoPorUsuario(id);
             return ResponseEntity.ok(carrito);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
