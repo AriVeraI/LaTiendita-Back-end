@@ -1,4 +1,4 @@
-package com.tienditayeya.tyback_end.service;
+/*package com.tienditayeya.tyback_end.service;
 
 import com.tienditayeya.tyback_end.dto.VariantesHPRequestDTO;
 import com.tienditayeya.tyback_end.model.Producto;
@@ -56,4 +56,4 @@ public class VariantesHPService {private final VariantesHPRepository repository;
         }
         repository.deleteById(id);
     }
-}
+}*/

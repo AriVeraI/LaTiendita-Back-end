@@ -1,4 +1,4 @@
-package com.tienditayeya.tyback_end.controller;
+/*package com.tienditayeya.tyback_end.controller;
 import com.tienditayeya.tyback_end.dto.VariantesHPRequestDTO;
 import com.tienditayeya.tyback_end.model.VariantesHP;
 import com.tienditayeya.tyback_end.service.VariantesHPService;
@@ -38,4 +38,4 @@ public class VariantesHPController {
     public void delete(@PathVariable Long variantesId, @PathVariable Long productoId) {
         service.delete(variantesId, productoId);
     }
-}
+}*/
