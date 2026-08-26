@@ -1,6 +1,6 @@
 package com.tienditayeya.tyback_end.controller;
 
->>>>>>> Develop
+
 import com.tienditayeya.tyback_end.dto.VariantesHPRequestDTO;
 import com.tienditayeya.tyback_end.model.VariantesHP;
 import com.tienditayeya.tyback_end.service.VariantesHPService;
