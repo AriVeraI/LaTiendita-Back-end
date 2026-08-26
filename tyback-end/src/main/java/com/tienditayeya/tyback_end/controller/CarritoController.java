@@ -1,6 +1,7 @@
 package com.tienditayeya.tyback_end.controller;
 
 
+import com.tienditayeya.tyback_end.dto.ActualizarCantidadDTO;
 import com.tienditayeya.tyback_end.dto.CarritoDTO;
 import com.tienditayeya.tyback_end.dto.CarritoDetalleDTO;
 import com.tienditayeya.tyback_end.model.Carrito;
@@ -46,21 +47,10 @@ public class CarritoController {
     }
 
     //
-    @GetMapping("usuario/carrito/{id}")
+    @GetMapping("/usuario/carrito/{id}")
     public ResponseEntity<Carrito> obtenerCarritoDelUsuario(@PathVariable int id) {
         try {
             Carrito carrito = carritoService.obtenerOACrearCarritoPorUsuario(id);
-            return ResponseEntity.ok(carrito);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-    }
-
-    //
-    @GetMapping("usuario/detalle/{id}")
-    public ResponseEntity<CarritoDetalleDTO> obtenerDetalleDeCarrito(@PathVariable int id) {
-        try {
-            CarritoDetalleDTO carrito = carritoService.obtenerCarritoDetalladoPorUsuario(id);
             return ResponseEntity.ok(carrito);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
@@ -84,4 +74,37 @@ public class CarritoController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
+
+    // -------Funcionalidades tienda
+    @GetMapping("/detalle/{id}")
+    public ResponseEntity<CarritoDetalleDTO> obtenerDetalleDeCarrito(@PathVariable int id) {
+        try {
+            CarritoDetalleDTO carrito = carritoService.obtenerCarritoDetalladoPorUsuario(id);
+            return ResponseEntity.ok(carrito);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+    @PostMapping("/actualizar")
+    public ResponseEntity<CarritoDetalleDTO> actualizarCantidad(@RequestBody ActualizarCantidadDTO actualizarCantidadDTO) {
+        try {
+            CarritoDetalleDTO carrito = carritoService.actualizarCantidadProducto(actualizarCantidadDTO);
+            return ResponseEntity.ok(carrito);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+    @DeleteMapping("/borrar-item")
+    public ResponseEntity<CarritoDetalleDTO> eliminarItem(@RequestBody ActualizarCantidadDTO actualizarCantidadDTO) {
+        try {
+            CarritoDetalleDTO carrito = carritoService.eliminarItem(actualizarCantidadDTO);
+            return ResponseEntity.ok(carrito);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+
 }

@@ -1,5 +1,6 @@
 package com.tienditayeya.tyback_end.service;
 
+import com.tienditayeya.tyback_end.dto.ActualizarCantidadDTO;
 import com.tienditayeya.tyback_end.dto.CarritoDTO;
 import com.tienditayeya.tyback_end.dto.CarritoDetalleDTO;
 import com.tienditayeya.tyback_end.dto.ItemCarritoDTO;
@@ -88,8 +89,6 @@ public class CarritoService {
         // 3. Mapea la información hacia el DTO para el front-end
         CarritoDetalleDTO detalleDTO = new CarritoDetalleDTO();
         detalleDTO.setIdCarrito(carrito.getIdCarrito());
-        detalleDTO.setFechaCreacion(carrito.getFechaCracion());
-        detalleDTO.setIdUsuario(carrito.getIdUsuario());
 
         List<ItemCarritoDTO> items = productosEnCarrito.stream().map(cp -> {
             ItemCarritoDTO item = new ItemCarritoDTO();
@@ -114,6 +113,34 @@ public class CarritoService {
         return detalleDTO;
     }
 
+    public CarritoDetalleDTO actualizarCantidadProducto(ActualizarCantidadDTO actualizarCantidadDTO) {
+        // 1. Buscar el Item a actualizar
+        CarritoProducto carritoProducto = carritoProductoRepository.findById(actualizarCantidadDTO.getIdCarritoProductos())
+                .orElseThrow(() -> new RuntimeException("No se encontró el producto en el carrito"));
+
+        // 2. Actualizar la cantidad
+        carritoProducto.setCantidad(actualizarCantidadDTO.getCantidad());
+
+        // 3. Guardar los cambios en la base de datos
+        carritoProductoRepository.save(carritoProducto);
+
+        // 4. Obtener y retornar el DTO detallado actualizado del usuario
+        // (Asumiendo que ya tienes un método que hace esto pasándole el idUsuario)
+        return obtenerCarritoDetalladoPorUsuario(actualizarCantidadDTO.getIdUsuario());
+    }
+
+    public CarritoDetalleDTO eliminarItem(ActualizarCantidadDTO actualizarCantidadDTO) {
+        // 1. Buscar el Item a actualizar
+        CarritoProducto carritoProducto = carritoProductoRepository.findById(actualizarCantidadDTO.getIdCarritoProductos())
+                .orElseThrow(() -> new RuntimeException("No se encontró el producto en el carrito"));
+
+        // 3. Guardar los cambios en la base de datos
+        carritoProductoRepository.delete(carritoProducto);
+
+        // 4. Obtener y retornar el DTO detallado actualizado del usuario
+        // (Asumiendo que ya tienes un método que hace esto pasándole el idUsuario)
+        return obtenerCarritoDetalladoPorUsuario(actualizarCantidadDTO.getIdUsuario());
+    }
 
     // Métodos auxiliares de mapeo (Entidad <-> DTO)
     private CarritoDTO convertirADTO(Carrito carrito) {

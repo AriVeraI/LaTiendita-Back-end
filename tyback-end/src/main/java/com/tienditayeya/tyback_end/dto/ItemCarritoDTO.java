@@ -8,6 +8,7 @@ public class ItemCarritoDTO {
     private int idProducto;
     private String nombreProducto;
     private BigDecimal precioUnitario;
+    private String imagenURL;
 
     // Aquí podrías agregar nombre, precio, imagen si gustas mapearlo desde tu tabla productos
 
@@ -18,20 +19,10 @@ public class ItemCarritoDTO {
     public void setCantidad(int cantidad) { this.cantidad = cantidad; }
     public int getIdProducto() { return idProducto; }
     public void setIdProducto(int idProducto) { this.idProducto = idProducto; }
-
-    public String getNombreProducto() {
-        return nombreProducto;
-    }
-
-    public void setNombreProducto(String nombreProducto) {
-        this.nombreProducto = nombreProducto;
-    }
-
-    public BigDecimal getPrecioUnitario() {
-        return precioUnitario;
-    }
-
-    public void setPrecioUnitario(BigDecimal precioUnitario) {
-        this.precioUnitario = precioUnitario;
-    }
+    public String getImagenURL() { return imagenURL; }
+    public void setImagenURL(String imagenURL) { this.imagenURL = imagenURL; }
+    public String getNombreProducto() { return nombreProducto; }
+    public void setNombreProducto(String nombreProducto) { this.nombreProducto = nombreProducto; }
+    public BigDecimal getPrecioUnitario() { return precioUnitario; }
+    public void setPrecioUnitario(BigDecimal precioUnitario) { this.precioUnitario = precioUnitario; }
 }
