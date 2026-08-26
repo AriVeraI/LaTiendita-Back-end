@@ -3,7 +3,13 @@
 > Sistema de comercio electrónico (E-commerce) desarrollado como API REST robusta y escalable, utilizando **Java** y **Spring Boot**.
 
 ## 🚀 Sobre el Proyecto
+<<<<<<< HEAD
 **La tiendita de la yeya** es una plataforma backend diseñada para gestionar las operaciones esenciales de una tienda online, incluyendo el control de usuarios, catálogo de productos con variantes y categorías, carritos de compras y procesamiento de pedidos transaccionales. El sistema implementa una arquitectura limpia basada en capas (Model, Repository, Service, Controller, DTO) para garantizar mantenibilidad y separación de responsabilidades.
+=======
+**La tiendita de la yeya** es una plataforma backend diseñada para gestionar las operaciones esenciales de una tienda online, incluyendo el control de usuarios, 
+catálogo de productos con variantes y categorías, carritos de compras y procesamiento de pedidos transaccionales. 
+El sistema implementa una arquitectura limpia basada en capas (Model, Repository, Service, Controller, DTO) para garantizar mantenibilidad y separación de responsabilidades.
+>>>>>>> Develop
 
 ---
 
