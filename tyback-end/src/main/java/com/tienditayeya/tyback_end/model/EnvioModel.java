@@ -2,30 +2,36 @@ package com.tienditayeya.tyback_end.model;
 
 import jakarta.persistence.*;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "envio")
+@Table(name = "envios")
 public class EnvioModel {
     // -- Establecemos los valores de la tabla Envio
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 45)
+    @Column(name="paqueteria", nullable = false, length = 45)
     private String paqueteria;
 
-    @Column(nullable = false, length = 45)
-    private Long numeroDeRastreo;
+    @Column(name="numero_rastreo", nullable = false, length = 45, unique = true)
+    private String numeroDeRastreo;
 
-    @Column(nullable = false, length = 45)
+    @Column(name="estado_envio", nullable = false, length = 45)
     private String estadoDeEnvio;
 
-    @Column(nullable = false)
-    private Date fechaDespacho;
+    @Column(name="fecha_despacho", nullable = false)
+    private LocalDate fechaDespacho;
 
     @Column(nullable = false, length = 45)
-    private Date fechaEntregaEstimada;
+    private LocalDate fechaEntregaEstimada;
+
+    //LLave foranea
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pedidos_id_pedidos", nullable = false)
+    private Pedido pedido;
 
     public EnvioModel() {
 
@@ -33,15 +39,19 @@ public class EnvioModel {
 
 
     // -- Se crea los constructores
-    public EnvioModel(String paqueteria, Long numeroDeRastreo, String estadoDeEnvio, Date fechaDespacho, Date fechaEntregaEstimada) {
+
+
+    public EnvioModel(String paqueteria, String numeroDeRastreo, String estadoDeEnvio, LocalDate fechaDespacho, LocalDate fechaEntregaEstimada, Pedido pedido) {
         this.paqueteria = paqueteria;
         this.numeroDeRastreo = numeroDeRastreo;
         this.estadoDeEnvio = estadoDeEnvio;
         this.fechaDespacho = fechaDespacho;
         this.fechaEntregaEstimada = fechaEntregaEstimada;
+        this.pedido = pedido;
     }
 
     // -- Getters y Setters
+
     public Long getId() {
         return id;
     }
@@ -58,11 +68,11 @@ public class EnvioModel {
         this.paqueteria = paqueteria;
     }
 
-    public Long getNumeroDeRastreo() {
+    public String getNumeroDeRastreo() {
         return numeroDeRastreo;
     }
 
-    public void setNumeroDeRastreo(Long numeroDeRastreo) {
+    public void setNumeroDeRastreo(String numeroDeRastreo) {
         this.numeroDeRastreo = numeroDeRastreo;
     }
 
@@ -74,19 +84,27 @@ public class EnvioModel {
         this.estadoDeEnvio = estadoDeEnvio;
     }
 
-    public Date getFechaDespacho() {
+    public LocalDate getFechaDespacho() {
         return fechaDespacho;
     }
 
-    public void setFechaDespacho(Date fechaDespacho) {
+    public void setFechaDespacho(LocalDate fechaDespacho) {
         this.fechaDespacho = fechaDespacho;
     }
 
-    public Date getFechaEntregaEstimada() {
+    public LocalDate getFechaEntregaEstimada() {
         return fechaEntregaEstimada;
     }
 
-    public void setFechaEntregaEstimada(Date fechaEntregaEstimada) {
+    public void setFechaEntregaEstimada(LocalDate fechaEntregaEstimada) {
         this.fechaEntregaEstimada = fechaEntregaEstimada;
+    }
+
+    public Pedido getPedido() {
+        return pedido;
+    }
+
+    public void setPedido(Pedido pedido) {
+        this.pedido = pedido;
     }
 }
