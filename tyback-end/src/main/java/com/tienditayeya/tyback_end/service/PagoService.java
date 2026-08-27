@@ -1,11 +1,10 @@
 package com.tienditayeya.tyback_end.service;
 
-
 import com.tienditayeya.tyback_end.dto.PagoDTO;
 import com.tienditayeya.tyback_end.model.Pago;
-import com.tienditayeya.tyback_end.model.DetallePedido;
+import com.tienditayeya.tyback_end.model.Pedido;
 import com.tienditayeya.tyback_end.repository.PagoRepository;
-import com.tienditayeya.tyback_end.repository.DetallePedidoRepository;
+import com.tienditayeya.tyback_end.repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +18,7 @@ public class PagoService {
     private PagoRepository pagoRepository;
 
     @Autowired
-    private DetallePedidoRepository pedidoRepository; // la crea quien haga "pedidos"
+    private PedidoRepository pedidoRepository;
 
     public List<PagoDTO> listarTodos() {
         return pagoRepository.findAll()
@@ -35,11 +34,8 @@ public class PagoService {
     }
 
     public PagoDTO guardar(PagoDTO dto) {
-        // Buscamos el Pedido real usando el id que llega en el DTO.
-        DetallePedido pedido = (DetallePedido) pedidoRepository.findById(dto.getPedidoId())
+        Pedido pedido = pedidoRepository.findById(dto.getPedidoId())
                 .orElseThrow(() -> new RuntimeException("Pedido no encontrado con id: " + dto.getPedidoId()));
-
-        // Creamos el Pago y lo CONECTAMOS con el pedido encontrado.
 
         Pago pago = new Pago();
         pago.setMetodoPago(dto.getMetodoPago());
@@ -47,7 +43,6 @@ public class PagoService {
         pago.setFechaPago(dto.getFechaPago());
         pago.setPedido(pedido);
 
-        // Guardamos y devolvemos el DTO de salida.
         Pago pagoGuardado = pagoRepository.save(pago);
         return convertirADTO(pagoGuardado);
     }
@@ -56,7 +51,7 @@ public class PagoService {
         Pago pago = pagoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Pago no encontrado con id: " + id));
 
-        DetallePedido pedido = (DetallePedido) pedidoRepository.findById(dto.getPedidoId())
+        Pedido pedido = pedidoRepository.findById(dto.getPedidoId())
                 .orElseThrow(() -> new RuntimeException("Pedido no encontrado con id: " + dto.getPedidoId()));
 
         pago.setMetodoPago(dto.getMetodoPago());
@@ -71,7 +66,6 @@ public class PagoService {
     public void eliminar(Long id) {
         pagoRepository.deleteById(id);
     }
-
 
     private PagoDTO convertirADTO(Pago pago) {
         return new PagoDTO(

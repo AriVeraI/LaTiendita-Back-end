@@ -36,7 +36,7 @@ public class ImagenProductoService {
 
     public ImagenProductoDTO guardar(ImagenProductoDTO dto) {
         // 1. Buscamos el Producto real usando el id que llega en el DTO.
-        Producto producto = productoRepository.findById(dto.getProductoId())
+        Producto producto = productoRepository.findById(Math.toIntExact(dto.getProductoId()))
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado con id: " + dto.getProductoId()));
 
         // 2. Creamos la ImagenProducto y la CONECTAMOS con el producto encontrado.
@@ -54,7 +54,7 @@ public class ImagenProductoService {
         ImagenProducto imagen = imagenProductoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Imagen no encontrada con id: " + id));
 
-        Producto producto = productoRepository.findById(dto.getProductoId())
+        Producto producto = productoRepository.findById(Math.toIntExact(dto.getProductoId()))
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado con id: " + dto.getProductoId()));
 
         imagen.setUrlImagen(dto.getUrlImagen());

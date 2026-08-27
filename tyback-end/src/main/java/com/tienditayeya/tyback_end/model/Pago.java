@@ -1,7 +1,6 @@
 package com.tienditayeya.tyback_end.model;
 
 import jakarta.persistence.*;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -11,7 +10,7 @@ public class Pago {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_pagos")
-    private Long idPagos; // Cambiado a Long
+    private Long idPagos;
 
     @Column(name = "metodo_pago", nullable = false, length = 45)
     private String metodoPago;
@@ -22,18 +21,15 @@ public class Pago {
     @Column(name = "fecha_pago", nullable = false)
     private LocalDateTime fechaPago;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_detalle_pedido", nullable = false)
-    private DetallePedido pedido;
 
-    // Constructor vacío (Obligatorio para JPA/Spring)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pedidos_id_pedidos", nullable = false)
+    private Pedido pedido;
+
     public Pago() {
     }
 
-    // Constructor con todos los parámetros
-
-
-    public Pago(Long idPagos, String metodoPago, Double monto, LocalDateTime fechaPago, DetallePedido pedido) {
+    public Pago(Long idPagos, String metodoPago, Double monto, LocalDateTime fechaPago, Pedido pedido) {
         this.idPagos = idPagos;
         this.metodoPago = metodoPago;
         this.monto = monto;
@@ -41,7 +37,6 @@ public class Pago {
         this.pedido = pedido;
     }
 
-    // Getters y Setters
     public Long getIdPagos() {
         return idPagos;
     }
@@ -74,7 +69,11 @@ public class Pago {
         this.fechaPago = fechaPago;
     }
 
-    public DetallePedido getPedido() {return pedido;}
+    public Pedido getPedido() {
+        return pedido;
+    }
 
-    public void setPedido(DetallePedido pedido) {this.pedido = pedido;}
+    public void setPedido(Pedido pedido) {
+        this.pedido = pedido;
+    }
 }
