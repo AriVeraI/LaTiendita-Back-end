@@ -1,44 +1,45 @@
 package com.tienditayeya.tyback_end.controller;
 
+
 import com.tienditayeya.tyback_end.dto.ImagenProductoDTO;
+import com.tienditayeya.tyback_end.service.ImagenProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import com.tienditayeya.tyback_end.model.ImagenProducto;
-import com.tienditayeya.tyback_end.service.ImagenProductoService;
-import org.springframework.web.bind.annotation.*;
-import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/imagenes")
+@RequestMapping("/api/imagenes-productos")
 public class ImagenProductoController {
 
-    private final ImagenProductoService imagenService;
-
-    public ImagenProductoController(ImagenProductoService imagenService) {
-        this.imagenService = imagenService;
-    }
+    @Autowired
+    private ImagenProductoService imagenProductoService;
 
     @GetMapping
-    public List<ImagenProducto> listarTodas() {
-        return imagenService.obtenerTodas();
+    public ResponseEntity<List<ImagenProductoDTO>> listarTodas() {
+        return ResponseEntity.ok(imagenProductoService.listarTodas());
     }
 
     @GetMapping("/{id}")
-    public Optional<ImagenProducto> buscarPorId(@PathVariable Long id) { // Cambiado a Long
-        return imagenService.obtenerPorId(id);
+    public ResponseEntity<ImagenProductoDTO> obtenerPorId(@PathVariable Long id) {
+        return ResponseEntity.ok(imagenProductoService.obtenerPorId(id));
     }
 
     @PostMapping
-    public ImagenProducto crearImagen(@RequestBody ImagenProducto imagen) {
-        return imagenService.guardarImagen(imagen);
+    public ResponseEntity<ImagenProductoDTO> crear(@RequestBody ImagenProductoDTO dto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(imagenProductoService.guardar(dto));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ImagenProductoDTO> actualizar(@PathVariable Long id, @RequestBody ImagenProductoDTO dto) {
+        return ResponseEntity.ok(imagenProductoService.actualizar(id, dto));
     }
 
     @DeleteMapping("/{id}")
-    public String eliminarImagen(@PathVariable Long id) { // Cambiado a Long
-        imagenService.eliminarImagen(id);
-        return "Imagen eliminada con éxito";
+    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
+        imagenProductoService.eliminar(id);
+        return ResponseEntity.noContent().build();
     }
 }

@@ -1,6 +1,7 @@
 package com.tienditayeya.tyback_end.model;
 
 import jakarta.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -21,20 +22,23 @@ public class Pago {
     @Column(name = "fecha_pago", nullable = false)
     private LocalDateTime fechaPago;
 
-    @Column(name = "pedidos_id_pedidos", nullable = false)
-    private Long pedidosIdPedidos; // Cambiado a Long para hacer match
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_detalle_pedido", nullable = false)
+    private DetallePedido pedido;
 
     // Constructor vacío (Obligatorio para JPA/Spring)
     public Pago() {
     }
 
     // Constructor con todos los parámetros
-    public Pago(Long idPagos, String metodoPago, Double monto, LocalDateTime fechaPago, Long pedidosIdPedidos) {
+
+
+    public Pago(Long idPagos, String metodoPago, Double monto, LocalDateTime fechaPago, DetallePedido pedido) {
         this.idPagos = idPagos;
         this.metodoPago = metodoPago;
         this.monto = monto;
         this.fechaPago = fechaPago;
-        this.pedidosIdPedidos = pedidosIdPedidos;
+        this.pedido = pedido;
     }
 
     // Getters y Setters
@@ -70,11 +74,7 @@ public class Pago {
         this.fechaPago = fechaPago;
     }
 
-    public Long getPedidosIdPedidos() {
-        return pedidosIdPedidos;
-    }
+    public DetallePedido getPedido() {return pedido;}
 
-    public void setPedidosIdPedidos(Long pedidosIdPedidos) {
-        this.pedidosIdPedidos = pedidosIdPedidos;
-    }
+    public void setPedido(DetallePedido pedido) {this.pedido = pedido;}
 }

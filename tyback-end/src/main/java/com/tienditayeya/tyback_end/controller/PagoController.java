@@ -1,45 +1,44 @@
 package com.tienditayeya.tyback_end.controller;
 
-
+import com.tienditayeya.tyback_end.dto.PagoDTO;
+import com.tienditayeya.tyback_end.service.PagoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import com.tienditayeya.tyback_end.model.Pago;
-import com.tienditayeya.tyback_end.service.PagoService;
-import org.springframework.web.bind.annotation.*;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/pagos")
 public class PagoController {
 
-    private final PagoService pagoService;
-
-    public PagoController(PagoService pagoService) {
-        this.pagoService = pagoService;
-    }
+    @Autowired
+    private PagoService pagoService;
 
     @GetMapping
-    public List<Pago> listarTodos() {
-        return pagoService.obtenerTodos();
+    public ResponseEntity<List<PagoDTO>> listarTodos() {
+        return ResponseEntity.ok(pagoService.listarTodos());
     }
 
     @GetMapping("/{id}")
-    public Optional<Pago> buscarPorId(@PathVariable Long id) { // Cambiado a Long
-        return pagoService.obtenerPorId(id);
+    public ResponseEntity<PagoDTO> obtenerPorId(@PathVariable Long id) {
+        return ResponseEntity.ok(pagoService.obtenerPorId(id));
     }
 
     @PostMapping
-    public Pago crearPago(@RequestBody Pago pago) {
-        return pagoService.guardarPago(pago);
+    public ResponseEntity<PagoDTO> crear(@RequestBody PagoDTO dto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(pagoService.guardar(dto));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<PagoDTO> actualizar(@PathVariable Long id, @RequestBody PagoDTO dto) {
+        return ResponseEntity.ok(pagoService.actualizar(id, dto));
     }
 
     @DeleteMapping("/{id}")
-    public String eliminarPago(@PathVariable Long id) { // Cambiado a Long
-        pagoService.eliminarPago(id);
-        return "Pago eliminado con éxito";
+    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
+        pagoService.eliminar(id);
+        return ResponseEntity.noContent().build();
     }
 }

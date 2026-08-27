@@ -5,6 +5,7 @@ import com.tienditayeya.tyback_end.model.Producto;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface DetallePedidoRepository {
@@ -14,4 +15,5 @@ public interface DetallePedidoRepository {
 
     void deleteById(Integer id);
 
+    Optional<Object> findById(Long pedidoId);
 }

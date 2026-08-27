@@ -5,17 +5,17 @@ import java.time.LocalDateTime;
 
 public class PagoDTO {
 
-    private Long idPagos; // Cambiado a Long
+    private Long idPagos;
     private String metodoPago;
     private BigDecimal monto;
     private LocalDateTime fechaPago;
-    private Long pedidoId; // Cambiado a Long
+    private Long pedidoId;
 
-    // 1. Constructor vacío
+    // Constructor vacío
     public PagoDTO() {
     }
 
-    // 2. Constructor con todos los argumentos
+    // Constructor con todos los argumentos
     public PagoDTO(Long idPagos, String metodoPago, BigDecimal monto, LocalDateTime fechaPago, Long pedidoId) {
         this.idPagos = idPagos;
         this.metodoPago = metodoPago;
@@ -24,7 +24,7 @@ public class PagoDTO {
         this.pedidoId = pedidoId;
     }
 
-    // 3. Getters y Setters
+    // Getters y Setters
     public Long getIdPagos() {
         return idPagos;
     }
@@ -41,7 +41,7 @@ public class PagoDTO {
         this.metodoPago = metodoPago;
     }
 
-    public BigDecimal getMonto() {
+    public Double getMonto() {
         return monto;
     }
 
