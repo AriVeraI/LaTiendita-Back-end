@@ -1,19 +1,15 @@
 package com.tienditayeya.tyback_end.repository;
 
 import com.tienditayeya.tyback_end.model.DetallePedido;
-import com.tienditayeya.tyback_end.model.Producto;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
-public interface DetallePedidoRepository {
-    List<DetallePedido> findAll();
+public interface DetallePedidoRepository extends JpaRepository<DetallePedido, Long> {
 
-    DetallePedido save(DetallePedido detallePedido);
-
-    void deleteById(Integer id);
-
-    Optional<Object> findById(Long pedidoId);
+    // Spring Data JPA ya te da findAll(), save(), findById(), deleteById(Long id) por defecto.
+    // Si necesitas buscar por pedidoId, puedes agregarlo así:
+    // List<DetallePedido> findByPedidoId(Long pedidoId);
 }

@@ -12,5 +12,5 @@ import java.util.List;
 public interface DireccionesRepository extends JpaRepository<Direcciones, Long> {
 
     // Método para buscar direcciones por el id del usuario
-    List<Direcciones> findByUsuariosIdUsuario(Long usuariosIdUsuario);
+    List<Direcciones> findByUsuarioId(Long usuarioId);
 }

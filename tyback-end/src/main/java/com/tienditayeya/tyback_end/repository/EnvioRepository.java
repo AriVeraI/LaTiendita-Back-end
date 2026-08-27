@@ -9,7 +9,7 @@ import java.util.Optional;
 @Repository
 public interface EnvioRepository extends JpaRepository<EnvioModel, Long> {
     // Se utiliza el findById para el buscar el numero de rastreo del envio y se crea un booleano para ver si existe o no el envio
-    Optional<EnvioModel> findByIdNumeroDeRastreo(Long numeroDeRastreo);
+    Optional<EnvioModel> findByNumeroDeRastreo(Long numeroDeRastreo);
     boolean existsByNumeroDeRastreo(Long numeroDeRastreo);
 }
 
