@@ -1,22 +1,19 @@
 package com.tienditayeya.tyback_end.dto;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class PagoDTO {
 
-    private Long idPagos; // Cambiado a Long
+    private Long idPagos;
     private String metodoPago;
-    private BigDecimal monto;
+    private Double monto;
     private LocalDateTime fechaPago;
-    private Long pedidoId; // Cambiado a Long
+    private Long pedidoId;
 
-    // 1. Constructor vacío
     public PagoDTO() {
     }
 
-    // 2. Constructor con todos los argumentos
-    public PagoDTO(Long idPagos, String metodoPago, BigDecimal monto, LocalDateTime fechaPago, Long pedidoId) {
+    public PagoDTO(Long idPagos, String metodoPago, Double monto, LocalDateTime fechaPago, Long pedidoId) {
         this.idPagos = idPagos;
         this.metodoPago = metodoPago;
         this.monto = monto;
@@ -24,7 +21,6 @@ public class PagoDTO {
         this.pedidoId = pedidoId;
     }
 
-    // 3. Getters y Setters
     public Long getIdPagos() {
         return idPagos;
     }
@@ -41,11 +37,11 @@ public class PagoDTO {
         this.metodoPago = metodoPago;
     }
 
-    public BigDecimal getMonto() {
+    public Double getMonto() {
         return monto;
     }
 
-    public void setMonto(BigDecimal monto) {
+    public void setMonto(Double monto) {
         this.monto = monto;
     }
 
