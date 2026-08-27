@@ -19,4 +19,12 @@ public class DetallePedido {
 
     @Column(name = "precio_total_unitario", nullable = false)
     private Double precioTotal;
+
+    @ManyToOne
+    @JoinColumn(name = "pedidos_id_pedidos", nullable = false)
+    private Pedido pedido;
+
+    @ManyToOne
+    @JoinColumn(name = "productos_id_productos", nullable = false)
+    private Producto producto;
 }
