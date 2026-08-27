@@ -34,4 +34,6 @@ public class Direcciones {
 
     @Column(name = "usuarios_id_usuario", nullable = false)
     private Integer usuarioId;
+
+
 }

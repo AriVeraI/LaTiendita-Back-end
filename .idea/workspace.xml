@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bf93b4b7-117e-4a3a-97de-bb5a5d474c7c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/controller/DireccionesController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/controller/DetallePedidoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/controller/DetallePedidoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/service/DetallePedidoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/tyback-end/src/main/java/com/tienditayeya/tyback_end/service/DetallePedidoService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
