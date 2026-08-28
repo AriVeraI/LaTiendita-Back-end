@@ -1,17 +1,14 @@
 package com.tienditayeya.tyback_end.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
-// -- Se crea un Java Record para actuar como transportador de datos transparente que se genera automaticamente
 public record RequetsEnvioDTO(
-        @NotNull
-        String paqueteria,
-        @NotNull
-        Long numeroDeRastreo,
-        @NotNull
-        Date fechaDespacho,
-        @NotNull
-        Date fechaEntregaEstimada
-){}
+        @NotBlank String paqueteria,
+        @NotBlank String numeroRastreo,
+        @NotNull LocalDateTime fechaDespacho,
+        @NotBlank String fechaEntregaEstimada,
+        @NotNull Long pedidosIdPedidos
+) {}

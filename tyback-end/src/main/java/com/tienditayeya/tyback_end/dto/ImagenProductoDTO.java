@@ -2,9 +2,9 @@ package com.tienditayeya.tyback_end.dto;
 
 public class ImagenProductoDTO {
 
-    private Long idImagenesProductos;
+    private Long idImagenesProductos; // Cambiado a Long
     private String urlImagen;
-    private Long productoId;
+    private Long productoId; // Cambiado a Long
 
     // 1. Constructor vacío
     public ImagenProductoDTO() {

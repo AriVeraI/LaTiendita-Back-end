@@ -10,7 +10,7 @@ public class Pago {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_pagos")
-    private Long idPagos;
+    private Long idPagos; // Cambiado a Long
 
     @Column(name = "metodo_pago", nullable = false, length = 45)
     private String metodoPago;
@@ -21,22 +21,23 @@ public class Pago {
     @Column(name = "fecha_pago", nullable = false)
     private LocalDateTime fechaPago;
 
+    @Column(name = "pedidos_id_pedidos", nullable = false)
+    private Long pedidosIdPedidos; // Cambiado a Long para hacer match
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pedidos_id_pedidos", nullable = false)
-    private Pedido pedido;
-
+    // Constructor vacío (Obligatorio para JPA/Spring)
     public Pago() {
     }
 
-    public Pago(Long idPagos, String metodoPago, Double monto, LocalDateTime fechaPago, Pedido pedido) {
+    // Constructor con todos los parámetros
+    public Pago(Long idPagos, String metodoPago, Double monto, LocalDateTime fechaPago, Long pedidosIdPedidos) {
         this.idPagos = idPagos;
         this.metodoPago = metodoPago;
         this.monto = monto;
         this.fechaPago = fechaPago;
-        this.pedido = pedido;
+        this.pedidosIdPedidos = pedidosIdPedidos;
     }
 
+    // Getters y Setters
     public Long getIdPagos() {
         return idPagos;
     }
@@ -69,11 +70,11 @@ public class Pago {
         this.fechaPago = fechaPago;
     }
 
-    public Pedido getPedido() {
-        return pedido;
+    public Long getPedidosIdPedidos() {
+        return pedidosIdPedidos;
     }
 
-    public void setPedido(Pedido pedido) {
-        this.pedido = pedido;
+    public void setPedidosIdPedidos(Long pedidosIdPedidos) {
+        this.pedidosIdPedidos = pedidosIdPedidos;
     }
 }

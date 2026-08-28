@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.time.*;
 
@@ -13,6 +14,7 @@ public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_usuario")
     private Long idUsuario;
 
     @NotBlank
@@ -21,15 +23,16 @@ public class Usuario {
 
     @Email
     @NotBlank
-    @Column(name = "email", nullable = false, unique = true, length = 45)
+    @Column(name = "email", nullable = false, length = 45)
     private String email;
 
     @NotBlank
-    @Column(name = "telefono", nullable = false, unique = true, length = 10)
+    @Column(name = "telefono", nullable = false, length = 10)
     private String telefono;
 
     @NotBlank
-    @Column(name = "password", nullable = false, length = 30)
+    @JsonIgnore
+    @Column(name = "password", nullable = false, length = 100)
     private String password;
 
     @NotNull
@@ -126,7 +129,6 @@ public class Usuario {
                 ", nombreCompleto='" + nombreCompleto + '\'' +
                 ", email='" + email + '\'' +
                 ", telefono='" + telefono + '\'' +
-                ", password='" + password + '\'' +
                 ", fechaRegistro=" + fechaRegistro +
                 ", rol=" + rol +
                 '}';

@@ -1,13 +1,13 @@
 package com.tienditayeya.tyback_end.dto;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
-// -- Se crea un Java Record para actuar como transportador de datos transparente que se genera automaticamente
 public record ResponseEnvioDTO(
         Long id,
         String paqueteria,
-        Long numeroDeRastreo,
-        String estadoDeEnvio,
-        Date fechaDespacho,
-        Date fechaEntregaEstimada
+        String numeroRastreo,
+        String estadoEnvio,
+        LocalDateTime fechaDespacho,
+        String fechaEntregaEstimada,
+        Long pedidosIdPedidos
 ) {}

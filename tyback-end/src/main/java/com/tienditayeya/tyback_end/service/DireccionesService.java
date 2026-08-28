@@ -2,7 +2,9 @@ package com.tienditayeya.tyback_end.service;
 
 import com.tienditayeya.tyback_end.dto.DireccionesDTO;
 import com.tienditayeya.tyback_end.model.Direcciones;
+import com.tienditayeya.tyback_end.model.Usuario;
 import com.tienditayeya.tyback_end.repository.DireccionesRepository;
+import com.tienditayeya.tyback_end.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,9 +14,11 @@ import java.util.List;
 public class DireccionesService {
 
     private final DireccionesRepository direccionRepository;
+    private final UsuarioRepository usuarioRepository; // 1. Inyectamos el repositorio de usuarios
 
-    public DireccionesService(DireccionesRepository direccionRepository) {
+    public DireccionesService(DireccionesRepository direccionRepository, UsuarioRepository usuarioRepository) {
         this.direccionRepository = direccionRepository;
+        this.usuarioRepository = usuarioRepository;
     }
 
     @Transactional(readOnly = true)
@@ -50,7 +54,11 @@ public class DireccionesService {
         direccion.setCiudad(dto.getCiudad());
         direccion.setEstado(dto.getEstado());
         direccion.setCodigoPostal(dto.getCodigoPostal());
-        direccion.setUsuarioId(dto.getUsuariosId());
+
+        // Buscamos el usuario en la BD antes de asignarlo
+        Usuario usuario = usuarioRepository.findById(dto.getUsuariosId())
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + dto.getUsuariosId()));
+        direccion.setUsuario(usuario);
 
         return mapToDTO(direccionRepository.save(direccion));
     }
@@ -72,11 +80,20 @@ public class DireccionesService {
         dto.setCiudad(entity.getCiudad());
         dto.setEstado(entity.getEstado());
         dto.setCodigoPostal(entity.getCodigoPostal());
-        dto.setUsuariosId(entity.getUsuarioId());
+
+        // Extraemos el ID del objeto Usuario si existe
+        if (entity.getUsuario() != null) {
+            dto.setUsuariosId(entity.getUsuario().getIdUsuario());
+        }
+
         return dto;
     }
 
     private Direcciones mapToEntity(DireccionesDTO dto) {
+        // Buscamos el usuario para asignarlo en el builder
+        Usuario usuario = usuarioRepository.findById(dto.getUsuariosId())
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + dto.getUsuariosId()));
+
         return Direcciones.builder()
                 .idDireccion(dto.getIdDireccion())
                 .calle(dto.getCalle())
@@ -85,7 +102,7 @@ public class DireccionesService {
                 .ciudad(dto.getCiudad())
                 .estado(dto.getEstado())
                 .codigoPostal(dto.getCodigoPostal())
-                .usuarioId(dto.getUsuariosId())
+                .usuario(usuario) // Asignamos el objeto Usuario completo
                 .build();
     }
 }

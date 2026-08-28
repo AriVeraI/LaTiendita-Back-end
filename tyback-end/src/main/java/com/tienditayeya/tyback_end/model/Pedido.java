@@ -1,6 +1,8 @@
 package com.tienditayeya.tyback_end.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -13,42 +15,35 @@ public class Pedido {
     @Column(name = "id_pedidos")
     private Long idPedidos;
 
-    @Column(name = "numero_pedido", nullable = false, length = 45)
-    private String numeroPedido;
+    @Column(name = "numero_pedido", nullable = false)
+    private Integer numeroPedido;
 
-    @Column(name = "total", nullable = false, precision = 5, scale = 2)
+    @Column(name = "total", nullable = false, precision = 10, scale = 2)
     private BigDecimal total;
 
     @Column(name = "estado_pedido", nullable = false, length = 45)
     private String estadoPedido;
 
-    @Column(name = "fecha_creacion_pedido")
+    @Column(name = "fecha_creacion_pedido", nullable = false)
     private LocalDateTime fechaCreacionPedido;
 
-    // Relación ManyToOne con Usuario
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "usuarios_id_pedidos", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "usuarios_id_usuario", nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Usuario usuario;
 
-    // Relación ManyToOne con Direcciones
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "direcciones_id_direccion")
-//    private Direcciones direccion;
-
-    // Constructores
     public Pedido() {
     }
 
-    public Pedido(String numeroPedido, BigDecimal total, String estadoPedido, LocalDateTime fechaCreacionPedido, Usuario usuario, Direcciones direccion) {
+    public Pedido(Integer numeroPedido, BigDecimal total, String estadoPedido,
+                  LocalDateTime fechaCreacionPedido, Usuario usuario) {
         this.numeroPedido = numeroPedido;
         this.total = total;
         this.estadoPedido = estadoPedido;
         this.fechaCreacionPedido = fechaCreacionPedido;
         this.usuario = usuario;
-//        this.direccion = direccion;
     }
 
-    // Getters y Setters
     public Long getIdPedidos() {
         return idPedidos;
     }
@@ -57,11 +52,11 @@ public class Pedido {
         this.idPedidos = idPedidos;
     }
 
-    public String getNumeroPedido() {
+    public Integer getNumeroPedido() {
         return numeroPedido;
     }
 
-    public void setNumeroPedido(String numeroPedido) {
+    public void setNumeroPedido(Integer numeroPedido) {
         this.numeroPedido = numeroPedido;
     }
 
@@ -96,12 +91,4 @@ public class Pedido {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-
-//    public Direcciones getDireccion() {
-//        return direccion;
-//    }
-//
-//    public void setDireccion(Direcciones direccion) {
-//        this.direccion = direccion;
-//    }
 }

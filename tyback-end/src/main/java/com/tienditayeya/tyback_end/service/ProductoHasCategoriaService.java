@@ -4,53 +4,19 @@ import com.tienditayeya.tyback_end.dto.ProductoHasCategoriaDTO;
 import com.tienditayeya.tyback_end.model.ProductoHasCategoria;
 import com.tienditayeya.tyback_end.model.ProductoHasCategoriaId;
 import com.tienditayeya.tyback_end.repository.ProductoHasCategoriaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class ProductoHasCategoriaService {
-
-    @Autowired
-    private ProductoHasCategoriaRepository repository;
-
-    private ProductoHasCategoriaDTO convertirADto(ProductoHasCategoria entity) {
-        return new ProductoHasCategoriaDTO(
-                entity.getProductosIdProductos(),
-                entity.getCategoriasIdCategoria()
-        );
-    }
-
-    private ProductoHasCategoria convertirAEntidad(ProductoHasCategoriaDTO dto) {
-        ProductoHasCategoria entity = new ProductoHasCategoria();
-        entity.setProductosIdProductos(dto.getProductosIdProductos());
-        entity.setCategoriasIdCategoria(dto.getCategoriasIdCategoria());
-        return entity;
-    }
-
-    public List<ProductoHasCategoriaDTO> listarTodos() {
-        return repository.findAll().stream()
-                .map(this::convertirADto)
-                .collect(Collectors.toList());
-    }
-
-    public Optional<ProductoHasCategoriaDTO> buscarPorId(Integer productoId, Integer categoriaId) {
-        ProductoHasCategoriaId idCompuesto = new ProductoHasCategoriaId(productoId, categoriaId);
-        return repository.findById(idCompuesto)
-                .map(this::convertirADto);
-    }
-
-    public ProductoHasCategoriaDTO guardar(ProductoHasCategoriaDTO dto) {
-        ProductoHasCategoria entity = convertirAEntidad(dto);
-        ProductoHasCategoria guardado = repository.save(entity);
-        return convertirADto(guardado);
-    }
-
-    public void eliminar(Integer productoId, Integer categoriaId) {
-        ProductoHasCategoriaId idCompuesto = new ProductoHasCategoriaId(productoId, categoriaId);
-        repository.deleteById(idCompuesto);
-    }
+    private final ProductoHasCategoriaRepository repository;
+    public ProductoHasCategoriaService(ProductoHasCategoriaRepository repository){this.repository=repository;}
+    private ProductoHasCategoriaDTO toDto(ProductoHasCategoria e){return new ProductoHasCategoriaDTO(e.getProductosIdProductos(),e.getCategoriasIdCategoria());}
+    public List<ProductoHasCategoriaDTO> listarTodos(){return repository.findAll().stream().map(this::toDto).toList();}
+    public Optional<ProductoHasCategoriaDTO> buscarPorId(Integer p,Integer c){return repository.findById(new ProductoHasCategoriaId(p,c)).map(this::toDto);}
+    public ProductoHasCategoriaDTO guardar(ProductoHasCategoriaDTO dto){return toDto(repository.save(new ProductoHasCategoria(dto.getProductosIdProductos(),dto.getCategoriasIdCategoria())));}
+    @Transactional public void eliminar(Integer p,Integer c){repository.deleteDirect(p,c);}
 }

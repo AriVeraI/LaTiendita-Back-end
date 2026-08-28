@@ -2,46 +2,39 @@ package com.tienditayeya.tyback_end.model;
 
 import jakarta.persistence.*;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "envio")
+@Table(name = "envios")
 public class EnvioModel {
-    // -- Establecemos los valores de la tabla Envio
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_envios")
     private Long id;
 
-    @Column(nullable = false, length = 45)
+    @Column(name = "paqueteria", nullable = false, length = 45)
     private String paqueteria;
 
-    @Column(nullable = false, length = 45)
-    private Long numeroDeRastreo;
+    @Column(name = "numero_rastreo", nullable = false, length = 45)
+    private String numeroRastreo;
 
-    @Column(nullable = false, length = 45)
-    private String estadoDeEnvio;
+    @Column(name = "estado_envio", nullable = false, length = 45)
+    private String estadoEnvio;
 
-    @Column(nullable = false)
-    private Date fechaDespacho;
+    @Column(name = "fecha_despacho", nullable = false)
+    private LocalDateTime fechaDespacho;
 
-    @Column(nullable = false, length = 45)
-    private Date fechaEntregaEstimada;
+    // El diagrama actual define esta columna como VARCHAR(45).
+    @Column(name = "fecha_entrega_estimada", nullable = false, length = 45)
+    private String fechaEntregaEstimada;
+
+    @Column(name = "pedidos_id_pedidos", nullable = false)
+    private Long pedidosIdPedidos;
 
     public EnvioModel() {
-
     }
 
-
-    // -- Se crea los constructores
-    public EnvioModel(String paqueteria, Long numeroDeRastreo, String estadoDeEnvio, Date fechaDespacho, Date fechaEntregaEstimada) {
-        this.paqueteria = paqueteria;
-        this.numeroDeRastreo = numeroDeRastreo;
-        this.estadoDeEnvio = estadoDeEnvio;
-        this.fechaDespacho = fechaDespacho;
-        this.fechaEntregaEstimada = fechaEntregaEstimada;
-    }
-
-    // -- Getters y Setters
     public Long getId() {
         return id;
     }
@@ -58,35 +51,43 @@ public class EnvioModel {
         this.paqueteria = paqueteria;
     }
 
-    public Long getNumeroDeRastreo() {
-        return numeroDeRastreo;
+    public String getNumeroRastreo() {
+        return numeroRastreo;
     }
 
-    public void setNumeroDeRastreo(Long numeroDeRastreo) {
-        this.numeroDeRastreo = numeroDeRastreo;
+    public void setNumeroRastreo(String numeroRastreo) {
+        this.numeroRastreo = numeroRastreo;
     }
 
-    public String getEstadoDeEnvio() {
-        return estadoDeEnvio;
+    public String getEstadoEnvio() {
+        return estadoEnvio;
     }
 
-    public void setEstadoDeEnvio(String estadoDeEnvio) {
-        this.estadoDeEnvio = estadoDeEnvio;
+    public void setEstadoEnvio(String estadoEnvio) {
+        this.estadoEnvio = estadoEnvio;
     }
 
-    public Date getFechaDespacho() {
+    public LocalDateTime getFechaDespacho() {
         return fechaDespacho;
     }
 
-    public void setFechaDespacho(Date fechaDespacho) {
+    public void setFechaDespacho(LocalDateTime fechaDespacho) {
         this.fechaDespacho = fechaDespacho;
     }
 
-    public Date getFechaEntregaEstimada() {
+    public String getFechaEntregaEstimada() {
         return fechaEntregaEstimada;
     }
 
-    public void setFechaEntregaEstimada(Date fechaEntregaEstimada) {
+    public void setFechaEntregaEstimada(String fechaEntregaEstimada) {
         this.fechaEntregaEstimada = fechaEntregaEstimada;
+    }
+
+    public Long getPedidosIdPedidos() {
+        return pedidosIdPedidos;
+    }
+
+    public void setPedidosIdPedidos(Long pedidosIdPedidos) {
+        this.pedidosIdPedidos = pedidosIdPedidos;
     }
 }

@@ -2,13 +2,13 @@ package com.tienditayeya.tyback_end.repository;
 
 import com.tienditayeya.tyback_end.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
-import java.util.*;
+import org.springframework.stereotype.Repository;
 
-public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
+import java.util.Optional;
 
-    // como puede devolver un valor nullo o existente se usa OPTIONAL
-    Optional<Usuario> findByEmail(String email);
-
-
-
+@Repository
+public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
+    Optional<Usuario> findByEmailIgnoreCase(String email);
+    boolean existsByEmailIgnoreCase(String email);
+    boolean existsByTelefono(String telefono);
 }
