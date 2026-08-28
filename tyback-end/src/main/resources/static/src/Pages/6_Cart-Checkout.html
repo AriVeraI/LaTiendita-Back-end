@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+
+  <head>
+    <!-------------POR FAVOR MANTEN EL ORDEN DEL HEAD COMO ESTÁ, AÑADE LO QUE NECESITES EN LA SECCIÓN CORRESPONDIENTE (CADA LINK O REFERENCIA EN UNA LÍNEA DE CÓDIGO)------------------------------------------------------------>  <meta charset="UTF-8">
+    <meta charset="UTF-8" />
+    <!-- Página responsiva -->  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Referencia a archivos con estilos -->
+    <link rel="stylesheet" href="../Styles/style.css">
+    <link rel="stylesheet" href="../Styles/1_index.css">
+    <link rel="stylesheet" href="../Styles/2_cartCheckout.css">
+    <!-- Enlaces a librerías externas por CDN (FontAwesome, Bootstrap Icons y Bootstrap CSS) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <!-- Importación de fuentes tipográficas de Google Fonts (Fredoka y Montserrat) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!-- Título de la pestaña del navegador -->
+    <title>Cart-Checkout</title>
+    <link rel="stylesheet" href="../Styles/11_predeploy.css">
+</head>
+
+  <body>
+    <!------------------------------------------------ NAVBAR --------------------------------------------->
+    <header id="navbar1" class="main-header"></header>
+
+    <!--------------------------------------PRINCIPAL----------------------------------------->
+
+    <main class="container my-5">
+      <h2 class="mb-4 fw-bold">Finalizar Compra</h2>
+
+      <div class="row">
+        <!-- Columna Izquierda: Pasos de Carrito, Envío y Pago -->
+        <div class="col-lg-8">
+
+          <!-- Paso 1: Tu Carrito (Dinámico) -->
+          <div class="card shadow-sm border-0 mb-4 p-4">
+            <h5 class="fw-bold mb-3">
+              <span class="badge rounded-circle bg-secondary me-2">1</span> Tu Carrito
+            </h5>
+
+            <!-- Contenedor donde JS inyectará los productos del LocalStorage -->
+            <div id="checkout-cart-items">
+              <!-- Aquí aparecerán los productos dinámicamente -->
+            </div>
+          </div>
+
+          <!-- Paso 2: Dirección de Envío -->
+          <div class="card shadow-sm border-0 mb-4 p-4">
+            <h5 class="fw-bold mb-3">
+              <span class="badge rounded-circle bg-secondary me-2">2</span> Dirección de Envío
+            </h5>
+            <form id="shipping-form" novalidate>
+              <div class="mb-3">
+                <label class="form-label text-muted small" for="shipping-name">Nombre Completo</label>
+                <input type="text" class="form-control" id="shipping-name" autocomplete="name"
+                  minlength="3" maxlength="100" placeholder="Ej. Ana Pérez" required />
+              </div>
+
+              <div class="row">
+                <div class="col-md-8 mb-3">
+                  <label class="form-label text-muted small" for="shipping-street">Calle</label>
+                  <input type="text" class="form-control" id="shipping-street" autocomplete="address-line1"
+                    maxlength="45" placeholder="Ej. Av. Reforma" required />
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label class="form-label text-muted small" for="shipping-number">Número</label>
+                  <input type="text" class="form-control" id="shipping-number" maxlength="10"
+                    placeholder="Ej. 222" required />
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label text-muted small" for="shipping-colony">Colonia</label>
+                <input type="text" class="form-control" id="shipping-colony" autocomplete="address-line2"
+                  maxlength="45" placeholder="Ej. Juárez" required />
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label text-muted small" for="shipping-city">Ciudad</label>
+                  <input type="text" class="form-control" id="shipping-city" autocomplete="address-level2"
+                    maxlength="25" placeholder="Ej. Ciudad de México" required />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label text-muted small" for="shipping-state">Estado</label>
+                  <input type="text" class="form-control" id="shipping-state" autocomplete="address-level1"
+                    maxlength="45" placeholder="Ej. CDMX" required />
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label text-muted small" for="shipping-zip">Código Postal</label>
+                  <input type="text" class="form-control" id="shipping-zip" autocomplete="postal-code"
+                    inputmode="numeric" pattern="[0-9]{5}" maxlength="5" placeholder="Ej. 06600" required />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label text-muted small" for="shipping-phone">Número de Teléfono</label>
+                  <input type="tel" class="form-control" id="shipping-phone" autocomplete="tel"
+                    minlength="10" maxlength="20" placeholder="Ej. 5512345678" required />
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <!-- Paso 3: Método de Pago -->
+          <div class="card shadow-sm border-0 mb-4 p-4">
+            <h5 class="fw-bold mb-3">
+              <span class="badge rounded-circle bg-secondary me-2">3</span> Método de Pago
+            </h5>
+
+            <div class="payment-option form-check mb-3 p-3 border rounded selected" data-payment-option>
+              <input class="form-check-input" type="radio" name="metodoPago" id="tarjeta-simulada"
+                value="Tarjeta simulada" checked required />
+              <label class="form-check-label fw-bold w-100" for="tarjeta-simulada">
+                <i class="bi bi-credit-card me-2"></i> Tarjeta de Crédito / Débito
+                <span class="badge text-bg-light ms-2">Simulación</span>
+              </label>
+              <p class="small text-muted mb-0 mt-2">
+                No se solicitan ni almacenan número de tarjeta, fecha de vencimiento o CVV.
+              </p>
+            </div>
+
+            <div class="payment-option form-check mb-3 p-3 border rounded" data-payment-option>
+              <input class="form-check-input" type="radio" name="metodoPago" id="paypal-simulado"
+                value="PayPal simulado" required />
+              <label class="form-check-label fw-bold w-100" for="paypal-simulado">
+                <i class="bi bi-paypal me-2"></i> PayPal
+                <span class="badge text-bg-light ms-2">Simulación</span>
+              </label>
+              <p class="small text-muted mb-0 mt-2">
+                Se registra el método elegido, pero no se conecta ni se envían credenciales a PayPal.
+              </p>
+            </div>
+
+            <div class="payment-option form-check mb-2 p-3 border rounded" data-payment-option>
+              <input class="form-check-input" type="radio" name="metodoPago" id="mercado-pago-simulado"
+                value="Mercado Pago simulado" required />
+              <label class="form-check-label fw-bold w-100" for="mercado-pago-simulado">
+                <i class="bi bi-wallet2 me-2"></i> Mercado Pago
+                <span class="badge text-bg-light ms-2">Simulación</span>
+              </label>
+              <p class="small text-muted mb-0 mt-2">
+                Se conserva el diseño de Figma sin manejar datos bancarios reales.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Columna Derecha: Resumen de Compra Dinámico -->
+        <div class="col-lg-4">
+          <div class="card shadow-sm border-0 p-4 sticky-top" style="top: 20px">
+            <h5 class="fw-bold mb-3">Resumen de Compra</h5>
+            <div class="d-flex justify-content-between mb-2 text-muted">
+              <span>Subtotal</span>
+              <span id="checkout-subtotal">$0.00</span>
+            </div>
+            <div class="d-flex justify-content-between mb-2 text-muted">
+              <span>Envío</span>
+              <span class="text-success fw-bold">Gratis</span>
+            </div>
+            <hr />
+            <div class="d-flex justify-content-between mb-3">
+              <span class="fw-bold fs-5">Total</span>
+              <span class="fw-bold fs-5 text-danger" id="checkout-total">$0.00</span>
+            </div>
+            <button id="btn-finalizar-compra" class="btn btn-dark w-100 py-2 fw-bold shadow-sm">
+              Finalizar Compra
+            </button>
+            <small class="text-center text-muted mt-3 d-block">
+              <i class="bi bi-shield-check"></i> Pago seguro de demostración: no se almacenan datos bancarios
+            </small>
+          </div>
+        </div>
+      </div>
+    </main>
+
+
+    <!-- Componente Lateral del Carrito (Offcanvas) -->
+    <div id="cart-drawer-container"></div>
+
+    <!--------------------------------------- Footer ---------------------------------------------------->
+    <footer id="footer1" class="footer-seccion py-5 px-4 px-md-5"></footer>
+    <!-- SCRIPT de Card, Bootstrap, carrito lateral, Navbar y Footer (MANTENER UN LINK POR LÍNEA DE CÓDIGO POR FAVOR)-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="../JScript/RuntimeConfig.js"></script>
+    <script src="../JScript/ApiConfig.js"></script>
+    <script src="../JScript/StoreConfig.js"></script>
+    <script src="../JScript/Cart.js"></script>
+    <script src="../JScript/Cart_Checkout_Thanks.js"></script>
+    <script src="../JScript/Auth.js"></script>
+    <script src="../JScript/Navbar_Footer.js"></script>
+
+  </body>
+
+</html>
