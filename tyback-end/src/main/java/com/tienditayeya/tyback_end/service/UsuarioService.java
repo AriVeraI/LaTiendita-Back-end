@@ -1,79 +1,151 @@
 package com.tienditayeya.tyback_end.service;
 
+import com.tienditayeya.tyback_end.dto.LoginRequest;
+import com.tienditayeya.tyback_end.dto.AdminCreateRequest;
+import com.tienditayeya.tyback_end.dto.RegistroUsuarioRequest;
+import com.tienditayeya.tyback_end.dto.UsuarioResponse;
 import com.tienditayeya.tyback_end.model.Rol;
 import com.tienditayeya.tyback_end.model.Usuario;
+import com.tienditayeya.tyback_end.repository.RolRepository;
 import com.tienditayeya.tyback_end.repository.UsuarioRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
-import java.util.*;
+import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
+    private final RolRepository rolRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final AuthSessionService authSessionService;
 
-    public UsuarioService(UsuarioRepository usuarioRepository){
+    public UsuarioService(UsuarioRepository usuarioRepository,
+                          RolRepository rolRepository,
+                          PasswordEncoder passwordEncoder,
+                          AuthSessionService authSessionService) {
         this.usuarioRepository = usuarioRepository;
+        this.rolRepository = rolRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.authSessionService = authSessionService;
     }
 
-    //Métodos
+    @Transactional
+    public UsuarioResponse registrar(RegistroUsuarioRequest request) {
+        String correo = request.correo().trim().toLowerCase();
+        String telefono = request.telefono().trim();
 
-    /**
-     *Listar los valores de la tabla usuario
-     */
-    public List<Usuario> listar(){
-        return usuarioRepository.findAll();
-    }
-    /**
-     *Busca y muestra el rol por id
-     */
-    public Optional<Usuario> obtenerPorId(Long id){
-        if(!usuarioRepository.existsById(id)) {
-            throw new IllegalArgumentException("Id no encontrado");
+        if (usuarioRepository.existsByEmailIgnoreCase(correo)) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "El correo ya está registrado");
         }
-        return usuarioRepository.findById(id);
-    }
-    /**
-     * Agregar un registro a la tabla
-     */
-    public Usuario crear(Usuario usuario){
-        usuarioRepository.findByEmail(usuario.getEmail()).ifPresent(emailEncontrado -> {
-            throw new IllegalArgumentException("Ya existe un usario con ese email");
-        });
-        return usuarioRepository.save(usuario);
-    }
-    /**
-     *Actualiza al usuario
-     */
-    public Usuario actualizar(Long id, Usuario usuario){
-        Usuario actual = usuarioRepository.findById(id)
-                .orElseThrow(()-> new IllegalArgumentException("Usuario no encontrado"));
-        usuarioRepository.findByEmail(usuario.getEmail()).ifPresent(emailEncontrado -> {
-            if(!emailEncontrado.getIdUsuario().equals(id)){
-                throw new IllegalArgumentException("Ya existe un usuario con ese email");
-            }
-        });
-
-        actual.setNombreCompleto(usuario.getNombreCompleto());
-        actual.setEmail(usuario.getEmail());
-        actual.setTelefono(usuario.getTelefono());
-        actual.setPassword(usuario.getPassword());
-        actual.setFechaRegistro(usuario.getFechaRegistro());
-        actual.setRol(usuario.getRol());
-        return usuarioRepository.save(actual);
-    }
-    /**
-     *Elimina un registro de la tabla
-     */
-    public void eliminar(Long id){
-        if(!usuarioRepository.existsById(id)){
-            throw new IllegalArgumentException("Usuario no encontrado");
+        if (usuarioRepository.existsByTelefono(telefono)) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "El teléfono ya está registrado");
         }
-        usuarioRepository.deleteById(id);
 
+        Rol rolUsuario = rolRepository.findByRolUsuarioIgnoreCase("user")
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.INTERNAL_SERVER_ERROR,
+                        "No existe el rol 'user' en la base de datos"
+                ));
+
+        Usuario usuario = new Usuario();
+        usuario.setNombreCompleto(request.nombre().trim());
+        usuario.setEmail(correo);
+        usuario.setTelefono(telefono);
+        usuario.setPassword(passwordEncoder.encode(request.clave()));
+        usuario.setFechaRegistro(LocalDate.now());
+        usuario.setRol(rolUsuario);
+
+        return toResponse(usuarioRepository.save(usuario), null);
     }
 
 
+    @Transactional
+    public UsuarioResponse registrarAdmin(AdminCreateRequest request) {
+        String correo = request.correo().trim().toLowerCase();
+        String telefono = request.telefono().trim();
+        if (usuarioRepository.existsByEmailIgnoreCase(correo)) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "El correo ya está registrado");
+        }
+        if (usuarioRepository.existsByTelefono(telefono)) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "El teléfono ya está registrado");
+        }
+        Rol rolAdmin = rolRepository.findByRolUsuarioIgnoreCase("admin")
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "No existe el rol admin"));
+        Usuario usuario = new Usuario();
+        usuario.setNombreCompleto(request.nombre().trim());
+        usuario.setEmail(correo);
+        usuario.setTelefono(telefono);
+        usuario.setPassword(passwordEncoder.encode(request.clave()));
+        usuario.setFechaRegistro(LocalDate.now());
+        usuario.setRol(rolAdmin);
+        return toResponse(usuarioRepository.save(usuario), null);
+    }
 
 
+    @Transactional
+    public UsuarioResponse cambiarRol(Long idUsuario, String nombreRol) {
+        Usuario usuario = usuarioRepository.findById(idUsuario)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
+        Rol rol = rolRepository.findByRolUsuarioIgnoreCase(nombreRol)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Rol no válido"));
+        usuario.setRol(rol);
+        return toResponse(usuarioRepository.save(usuario), null);
+    }
+
+    @Transactional(readOnly = true)
+    public UsuarioResponse login(LoginRequest request) {
+        Usuario usuario = validarCredenciales(request);
+        String token = authSessionService.crearSesion(usuario);
+        return toResponse(usuario, token);
+    }
+
+    @Transactional(readOnly = true)
+    public UsuarioResponse loginAdmin(LoginRequest request) {
+        Usuario usuario = validarCredenciales(request);
+        if (usuario.getRol() == null || !"admin".equalsIgnoreCase(usuario.getRol().getRolUsuario())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "El usuario no tiene permisos de administrador");
+        }
+        String token = authSessionService.crearSesion(usuario);
+        return toResponse(usuario, token);
+    }
+
+    @Transactional(readOnly = true)
+    public List<UsuarioResponse> listarUsuarios() {
+        return usuarioRepository.findAll().stream().map(usuario -> toResponse(usuario, null)).toList();
+    }
+
+    @Transactional(readOnly = true)
+    public UsuarioResponse obtenerUsuarioSesion(AuthSessionService.SesionUsuario sesion) {
+        Usuario usuario = usuarioRepository.findById(sesion.idUsuario())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "El usuario de la sesión ya no existe"));
+        return toResponse(usuario, null);
+    }
+
+    private Usuario validarCredenciales(LoginRequest request) {
+        Usuario usuario = usuarioRepository.findByEmailIgnoreCase(request.correo().trim())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Credenciales inválidas"));
+
+        if (!passwordEncoder.matches(request.clave(), usuario.getPassword())) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Credenciales inválidas");
+        }
+        return usuario;
+    }
+
+    private UsuarioResponse toResponse(Usuario usuario, String sessionToken) {
+        return new UsuarioResponse(
+                usuario.getIdUsuario(),
+                usuario.getNombreCompleto(),
+                usuario.getEmail(),
+                usuario.getTelefono(),
+                usuario.getFechaRegistro(),
+                usuario.getRol() != null ? usuario.getRol().getRolUsuario() : null,
+                sessionToken
+        );
+    }
 }

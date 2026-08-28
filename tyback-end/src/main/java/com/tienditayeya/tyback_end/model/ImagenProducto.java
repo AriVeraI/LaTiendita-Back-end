@@ -9,16 +9,15 @@ public class ImagenProducto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_imagenes_productos")
-    private Long idImagenesProductos;
+    private Long idImagenesProductos; // Cambiado a Long
 
-    @Column(name = "url_imagen", nullable = false, length = 100)
+    @Column(name = "url_imagen", nullable = false, length = 50)
     private String urlImagen;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "productos_id_productos", nullable = false)
-    private Producto producto;
+    @Column(name = "productos_id_productos", nullable = false)
+    private Long productosIdProductos; // Cambiado a Long
 
-    // Constructor vacío
+    // Constructor vacío (Obligatorio para JPA/Spring)
     public ImagenProducto() {
     }
 
@@ -26,35 +25,31 @@ public class ImagenProducto {
     public ImagenProducto(Long idImagenesProductos, String urlImagen, Long productosIdProductos) {
         this.idImagenesProductos = idImagenesProductos;
         this.urlImagen = urlImagen;
-        this.producto = producto;
+        this.productosIdProductos = productosIdProductos;
     }
 
     // Getters y Setters
     public Long getIdImagenesProductos() {
-
         return idImagenesProductos;
     }
 
     public void setIdImagenesProductos(Long idImagenesProductos) {
-
         this.idImagenesProductos = idImagenesProductos;
     }
 
     public String getUrlImagen() {
-
         return urlImagen;
     }
 
     public void setUrlImagen(String urlImagen) {
-
         this.urlImagen = urlImagen;
     }
 
-    public Producto getProducto() {
-        return producto;
+    public Long getProductosIdProductos() {
+        return productosIdProductos;
     }
 
-    public void setProducto(Producto producto) {
-        this.producto = producto;
+    public void setProductosIdProductos(Long productosIdProductos) {
+        this.productosIdProductos = productosIdProductos;
     }
 }

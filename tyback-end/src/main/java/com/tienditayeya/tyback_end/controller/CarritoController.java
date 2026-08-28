@@ -1,87 +1,28 @@
 package com.tienditayeya.tyback_end.controller;
 
-
 import com.tienditayeya.tyback_end.dto.CarritoDTO;
 import com.tienditayeya.tyback_end.dto.CarritoDetalleDTO;
 import com.tienditayeya.tyback_end.model.Carrito;
+import com.tienditayeya.tyback_end.service.AuthSessionService;
 import com.tienditayeya.tyback_end.service.CarritoService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/carritos")
-@CrossOrigin(origins = "*") // Permite peticiones desde el frontend si lo necesitas
 public class CarritoController {
+    private final CarritoService carritoService;
+    private final AuthSessionService auth;
+    public CarritoController(CarritoService carritoService, AuthSessionService auth){this.carritoService=carritoService;this.auth=auth;}
 
-    @Autowired
-    private CarritoService carritoService;
-
-    // Endpoint para listar todos: GET /api/carritos
-    @GetMapping
-    public ResponseEntity<List<CarritoDTO>> listarCarritos() {
-        List<CarritoDTO> carritos = carritoService.obtenerTodos();
-        return ResponseEntity.ok(carritos);
-    }
-
-    //
-    @GetMapping("/usuario/{idUsuario}")
-    public ResponseEntity<CarritoDetalleDTO> obtenerCarritoPorUsuario(@PathVariable int idUsuario) {
-        CarritoDetalleDTO carritoDetalle = carritoService.obtenerCarritoDetalladoPorUsuario(idUsuario);
-        return ResponseEntity.ok(carritoDetalle);
-    }
-
-    // Endpoint para buscar por ID: GET /api/carritos/{id}
-    @GetMapping("/{id}")
-    public ResponseEntity<CarritoDTO> obtenerCarritoPorId(@PathVariable int id) {
-        try {
-            CarritoDTO carrito = carritoService.obtenerPorId(id);
-            return ResponseEntity.ok(carrito);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-    }
-
-    //
-    @GetMapping("usuario/carrito/{id}")
-    public ResponseEntity<Carrito> obtenerCarritoDelUsuario(@PathVariable int id) {
-        try {
-            Carrito carrito = carritoService.obtenerOACrearCarritoPorUsuario(id);
-            return ResponseEntity.ok(carrito);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-    }
-
-    //
-    @GetMapping("usuario/detalle/{id}")
-    public ResponseEntity<CarritoDetalleDTO> obtenerDetalleDeCarrito(@PathVariable int id) {
-        try {
-            CarritoDetalleDTO carrito = carritoService.obtenerCarritoDetalladoPorUsuario(id);
-            return ResponseEntity.ok(carrito);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-    }
-
-    // Endpoint para crear: POST /api/carritos
-    @PostMapping
-    public ResponseEntity<CarritoDTO> crearCarrito(@RequestBody CarritoDTO carritoDTO) {
-        CarritoDTO nuevoCarrito = carritoService.guardar(carritoDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(nuevoCarrito);
-    }
-
-    // Endpoint para eliminar: DELETE /api/carritos/{id}
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminarCarrito(@PathVariable int id) {
-        try {
-            carritoService.eliminar(id);
-            return ResponseEntity.noContent().build();
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-    }
+    // El frontend actual usa localStorage; estos endpoints quedan como CRUD administrativo protegido.
+    @GetMapping public ResponseEntity<List<CarritoDTO>> listar(@RequestHeader(value="X-Session-Token",required=false)String t){auth.requerirAdmin(t);return ResponseEntity.ok(carritoService.obtenerTodos());}
+    @GetMapping("/usuario/{idUsuario}") public ResponseEntity<CarritoDetalleDTO> porUsuario(@RequestHeader(value="X-Session-Token",required=false)String t,@PathVariable int idUsuario){auth.requerirAdmin(t);return ResponseEntity.ok(carritoService.obtenerCarritoDetalladoPorUsuario(idUsuario));}
+    @GetMapping("/{id}") public ResponseEntity<CarritoDTO> porId(@RequestHeader(value="X-Session-Token",required=false)String t,@PathVariable int id){auth.requerirAdmin(t);return ResponseEntity.ok(carritoService.obtenerPorId(id));}
+    @GetMapping("usuario/carrito/{id}") public ResponseEntity<Carrito> carritoUsuario(@RequestHeader(value="X-Session-Token",required=false)String t,@PathVariable int id){auth.requerirAdmin(t);return ResponseEntity.ok(carritoService.obtenerOACrearCarritoPorUsuario(id));}
+    @GetMapping("usuario/detalle/{id}") public ResponseEntity<CarritoDetalleDTO> detalle(@RequestHeader(value="X-Session-Token",required=false)String t,@PathVariable int id){auth.requerirAdmin(t);return ResponseEntity.ok(carritoService.obtenerCarritoDetalladoPorUsuario(id));}
+    @PostMapping public ResponseEntity<CarritoDTO> crear(@RequestHeader(value="X-Session-Token",required=false)String t,@RequestBody CarritoDTO d){auth.requerirAdmin(t);return ResponseEntity.status(HttpStatus.CREATED).body(carritoService.guardar(d));}
+    @DeleteMapping("/{id}") public ResponseEntity<Void> eliminar(@RequestHeader(value="X-Session-Token",required=false)String t,@PathVariable int id){auth.requerirAdmin(t);carritoService.eliminar(id);return ResponseEntity.noContent().build();}
 }

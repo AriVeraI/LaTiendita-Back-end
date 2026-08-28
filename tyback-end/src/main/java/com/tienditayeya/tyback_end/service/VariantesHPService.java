@@ -48,7 +48,7 @@ public class VariantesHPService {
         relacion.setVariantes(variantes);
         relacion.setProducto(producto);
         relacion.getId().setVariantesIdVariantes(variantes.getIdVariantes());
-        relacion.getId().setProductosIdProductos(producto.getIdProductos().intValue()); // Usando getIdProductos() que es Integer
+        relacion.getId().setProductosIdProductos(producto.getIdProductos()); // Usando getIdProductos() que es Integer
 
         return repository.save(relacion);
     }

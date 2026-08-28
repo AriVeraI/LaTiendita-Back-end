@@ -37,3 +37,8 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Secretos/local ###
+.env
+.env.*
+*.local.properties

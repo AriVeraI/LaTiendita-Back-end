@@ -1,44 +1,65 @@
 package com.tienditayeya.tyback_end.controller;
 
-import com.tienditayeya.tyback_end.model.Pedido;
+import com.tienditayeya.tyback_end.dto.CrearPedidoRequest;
+import com.tienditayeya.tyback_end.dto.PedidoResponse;
+import com.tienditayeya.tyback_end.service.AuthSessionService;
+import com.tienditayeya.tyback_end.service.CheckoutService;
 import com.tienditayeya.tyback_end.service.PedidoService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/pedidos")
-@CrossOrigin(origins = "*") // Permite peticiones desde el frontend
+@RequestMapping({"/api/pedidos", "/api/orders"})
 public class PedidoController {
 
     private final PedidoService pedidoService;
+    private final CheckoutService checkoutService;
+    private final AuthSessionService authSessionService;
 
-    @Autowired
-    public PedidoController(PedidoService pedidoService) {
+    public PedidoController(PedidoService pedidoService,
+                            CheckoutService checkoutService,
+                            AuthSessionService authSessionService) {
         this.pedidoService = pedidoService;
+        this.checkoutService = checkoutService;
+        this.authSessionService = authSessionService;
     }
 
     @GetMapping
-    public List<Pedido> obtenerTodos() {
+    public List<PedidoResponse> obtenerTodos(
+            @RequestHeader(value = "X-Session-Token", required = false) String token) {
+        authSessionService.requerirAdmin(token);
         return pedidoService.obtenerTodos();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Pedido> obtenerPorId(@PathVariable Long id) {
-        return pedidoService.obtenerPorId(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<PedidoResponse> obtenerPorId(
+            @RequestHeader(value = "X-Session-Token", required = false) String token,
+            @PathVariable Long id) {
+        authSessionService.requerirAdmin(token);
+        return ResponseEntity.ok(pedidoService.obtenerPorId(id));
     }
 
     @PostMapping
-    public Pedido crearPedido(@RequestBody Pedido pedido) {
-        return pedidoService.guardarPedido(pedido);
+    public ResponseEntity<PedidoResponse> crearPedido(
+            @RequestHeader(value = "X-Session-Token", required = false) String token,
+            @Valid @RequestBody CrearPedidoRequest request) {
+        AuthSessionService.SesionUsuario sesion = authSessionService.requerirSesion(token);
+        if (!sesion.idUsuario().equals(request.idUsuario())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "No puedes crear pedidos para otro usuario");
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(checkoutService.procesarCompra(request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminarPedido(@PathVariable Long id) {
+    public ResponseEntity<Void> eliminarPedido(
+            @RequestHeader(value = "X-Session-Token", required = false) String token,
+            @PathVariable Long id) {
+        authSessionService.requerirAdmin(token);
         pedidoService.eliminarPedido(id);
         return ResponseEntity.noContent().build();
     }

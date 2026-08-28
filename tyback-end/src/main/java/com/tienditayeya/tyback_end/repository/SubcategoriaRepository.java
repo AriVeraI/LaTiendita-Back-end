@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SubcategoriaRepository extends JpaRepository<Subcategoria, Integer> {
+    long countByCategoria_IdCategoria(Integer categoriaId);
 }

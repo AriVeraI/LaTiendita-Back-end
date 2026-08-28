@@ -8,8 +8,6 @@ import java.util.List;
 
 @Repository
 public interface DetallePedidoRepository extends JpaRepository<DetallePedido, Long> {
-
-    // Spring Data JPA ya te da findAll(), save(), findById(), deleteById(Long id) por defecto.
-    // Si necesitas buscar por pedidoId, puedes agregarlo así:
-    // List<DetallePedido> findByPedidoId(Long pedidoId);
+    List<DetallePedido> findByPedidosIdPedidos(Long pedidoId);
+    List<DetallePedido> findByProductosIdProductos(Integer productoId);
 }

@@ -6,22 +6,20 @@ import java.time.LocalDateTime;
 public class PedidoDTO {
 
     private Long idPedidos;
-    private String numeroPedido;
+    private Integer numeroPedido;
     private BigDecimal total;
     private String estadoPedido;
     private LocalDateTime fechaCreacionPedido;
     private Long idUsuario;
-    private Long idDireccion;
 
     public PedidoDTO() {
     }
 
-    // Getters y Setters
     public Long getIdPedidos() { return idPedidos; }
     public void setIdPedidos(Long idPedidos) { this.idPedidos = idPedidos; }
 
-    public String getNumeroPedido() { return numeroPedido; }
-    public void setNumeroPedido(String numeroPedido) { this.numeroPedido = numeroPedido; }
+    public Integer getNumeroPedido() { return numeroPedido; }
+    public void setNumeroPedido(Integer numeroPedido) { this.numeroPedido = numeroPedido; }
 
     public BigDecimal getTotal() { return total; }
     public void setTotal(BigDecimal total) { this.total = total; }
@@ -34,7 +32,4 @@ public class PedidoDTO {
 
     public Long getIdUsuario() { return idUsuario; }
     public void setIdUsuario(Long idUsuario) { this.idUsuario = idUsuario; }
-
-    public Long getIdDireccion() { return idDireccion; }
-    public void setIdDireccion(Long idDireccion) { this.idDireccion = idDireccion; }
 }

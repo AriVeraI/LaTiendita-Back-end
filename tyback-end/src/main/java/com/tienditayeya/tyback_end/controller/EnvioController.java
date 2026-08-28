@@ -1,34 +1,13 @@
 package com.tienditayeya.tyback_end.controller;
-
-import com.tienditayeya.tyback_end.dto.ResponseEnvioDTO;
-import com.tienditayeya.tyback_end.dto.RequetsEnvioDTO;
-import com.tienditayeya.tyback_end.model.EnvioModel;
-import com.tienditayeya.tyback_end.service.EnvioService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
+import com.tienditayeya.tyback_end.dto.*;
+import com.tienditayeya.tyback_end.service.*;
+import jakarta.validation.Valid;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
-
-
-@RestController
-@RequestMapping("/envios")
-public class EnvioController {
-    private final EnvioService envioService;
-    private EnvioModel requets;
-
-    public EnvioController(EnvioService envioService){
-        this.envioService = envioService;
-    }
-
-    @PostMapping
-    public ResponseEntity<ResponseEnvioDTO> registrarEnvio(@Validated @RequestBody RequetsEnvioDTO request){
-        ResponseEnvioDTO nuevoEnvio = envioService.crearEnvio(requets);
-        return ResponseEntity.status(HttpStatus.CREATED).body(nuevoEnvio);
-    }
-
-    @GetMapping("rastreo/{numeroDeRastreo}")
-    public ResponseEntity<ResponseEnvioDTO> consultarPorRastreo(@PathVariable("numeroDeRastreo") Long numeroDeRastreo){
-        ResponseEnvioDTO envio = envioService.obtenerNumeroRastreo(numeroDeRastreo);
-        return ResponseEntity.ok(envio);
-    }
+@RestController @RequestMapping({"/envios","/api/envios"})
+public class EnvioController{
+ private final EnvioService service; private final AuthSessionService auth;
+ public EnvioController(EnvioService service,AuthSessionService auth){this.service=service;this.auth=auth;}
+ @PostMapping public ResponseEntity<ResponseEnvioDTO> create(@RequestHeader(value="X-Session-Token",required=false)String t,@Valid @RequestBody RequetsEnvioDTO d){auth.requerirAdmin(t);return ResponseEntity.status(HttpStatus.CREATED).body(service.crearEnvio(d));}
+ @GetMapping("/rastreo/{n}") public ResponseEntity<ResponseEnvioDTO> track(@PathVariable("n")String n){return ResponseEntity.ok(service.obtenerNumeroRastreo(n));}
 }

@@ -1,5 +1,6 @@
 package com.tienditayeya.tyback_end.service;
 
+import com.tienditayeya.tyback_end.dto.RequetsEnvioDTO;
 import com.tienditayeya.tyback_end.dto.ResponseEnvioDTO;
 import com.tienditayeya.tyback_end.model.EnvioModel;
 import com.tienditayeya.tyback_end.repository.EnvioRepository;
@@ -17,43 +18,40 @@ public class EnvioService {
         this.envioRepository = envioRepository;
     }
 
-    public ResponseEnvioDTO crearEnvio(EnvioModel envio) {
-        if (envioRepository.existsByNumeroDeRastreo(envio.getNumeroDeRastreo())){
-            throw new ResponseStatusException(
-                    HttpStatus.CONFLICT, "El numero de rastreo ya existe"
-            );
+    public ResponseEnvioDTO crearEnvio(RequetsEnvioDTO request) {
+        if (envioRepository.existsByNumeroRastreo(request.numeroRastreo())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "El número de rastreo ya existe");
         }
 
-        // Mapeo DTO -> Entidad
         EnvioModel model = new EnvioModel();
-        model.setPaqueteria(envio.getPaqueteria());
-        model.setNumeroDeRastreo(envio.getNumeroDeRastreo());
-        model.setEstadoDeEnvio(envio.getEstadoDeEnvio());
-        model.setFechaDespacho(envio.getFechaDespacho());
-        model.setFechaEntregaEstimada(envio.getFechaEntregaEstimada());
+        model.setPaqueteria(request.paqueteria());
+        model.setNumeroRastreo(request.numeroRastreo());
+        model.setEstadoEnvio("Preparando");
+        model.setFechaDespacho(request.fechaDespacho());
+        model.setFechaEntregaEstimada(request.fechaEntregaEstimada());
+        model.setPedidosIdPedidos(request.pedidosIdPedidos());
 
-        EnvioModel envioGuardado = envioRepository.save(model);
-
-        //Mapeo Entidad -> Dto
-        return convertirDTO(envioGuardado);
+        return convertirDTO(envioRepository.save(model));
     }
 
-    @Transactional
-    public ResponseEnvioDTO obtenerNumeroRastreo(Long numeroDeRastreo){
-        return envioRepository.findByNumeroDeRastreo(numeroDeRastreo).map(this::convertirDTO)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "No se encontro ningún envío con el número de ratreo " + numeroDeRastreo));
+    public ResponseEnvioDTO obtenerNumeroRastreo(String numeroRastreo) {
+        return envioRepository.findByNumeroRastreo(numeroRastreo)
+                .map(this::convertirDTO)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "No se encontró ningún envío con el número de rastreo " + numeroRastreo
+                ));
     }
 
-    //Metodo helper de mapeo
     private ResponseEnvioDTO convertirDTO(EnvioModel model) {
         return new ResponseEnvioDTO(
                 model.getId(),
                 model.getPaqueteria(),
-                model.getNumeroDeRastreo(),
-                model.getEstadoDeEnvio(),
+                model.getNumeroRastreo(),
+                model.getEstadoEnvio(),
                 model.getFechaDespacho(),
-                model.getFechaEntregaEstimada()
+                model.getFechaEntregaEstimada(),
+                model.getPedidosIdPedidos()
         );
     }
 }

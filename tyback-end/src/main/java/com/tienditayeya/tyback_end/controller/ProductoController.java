@@ -1,23 +1,29 @@
 package com.tienditayeya.tyback_end.controller;
 
 import com.tienditayeya.tyback_end.model.Producto;
+import com.tienditayeya.tyback_end.dto.CatalogProductoResponse;
+import com.tienditayeya.tyback_end.service.AuthSessionService;
 import com.tienditayeya.tyback_end.service.ProductoService;
+import com.tienditayeya.tyback_end.service.CatalogService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/productos")
+@RequestMapping({"/productos", "/api/products"})
 public class ProductoController {
-    //hacemos peticion al service
-    private final ProductoService productoService;
 
-    public ProductoController(ProductoService productoService){
+    private final ProductoService productoService;
+    private final AuthSessionService authSessionService;
+    private final CatalogService catalogService;
+
+    public ProductoController(ProductoService productoService, AuthSessionService authSessionService, CatalogService catalogService){
         this.productoService = productoService;
+        this.authSessionService = authSessionService;
+        this.catalogService = catalogService;
     }
 
-    //consultar
     @GetMapping
     public List<Producto> obtenerTodos(){
         return productoService.obtenerTodos();
@@ -28,23 +34,40 @@ public class ProductoController {
         return productoService.obtenerPorId(id);
     }
 
-    //crear
+
+    @GetMapping("/catalog")
+    public List<CatalogProductoResponse> catalogo(){
+        return catalogService.listar();
+    }
+
+    @GetMapping("/{id}/catalog")
+    public CatalogProductoResponse catalogoPorId(@PathVariable Integer id){
+        return catalogService.obtener(id);
+    }
+
     @PostMapping
-    public Producto guardar(@RequestBody Producto producto){
+    public Producto guardar(
+            @RequestHeader(value = "X-Session-Token", required = false) String token,
+            @RequestBody Producto producto){
+        authSessionService.requerirAdmin(token);
         return productoService.guardar(producto);
     }
 
     @PutMapping("/{id}")
-    public Producto actualizar(@PathVariable Long id, @RequestBody Producto producto){
+    public Producto actualizar(
+            @RequestHeader(value = "X-Session-Token", required = false) String token,
+            @PathVariable Integer id,
+            @RequestBody Producto producto){
+        authSessionService.requerirAdmin(token);
         producto.setIdProductos(id);
         return productoService.actualizar(producto);
     }
 
     @DeleteMapping("/{id}")
-    public void eliminar(@PathVariable Integer id) {
+    public void eliminar(
+            @RequestHeader(value = "X-Session-Token", required = false) String token,
+            @PathVariable Integer id) {
+        authSessionService.requerirAdmin(token);
         productoService.eliminar(id);
     }
-
-
-
 }

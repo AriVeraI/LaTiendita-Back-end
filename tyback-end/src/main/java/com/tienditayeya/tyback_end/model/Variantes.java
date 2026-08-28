@@ -17,13 +17,13 @@ public class Variantes {
     @Column(name = "id_variantes")
     private Long idVariantes;
 
-    @Column(name = "sku_variantes", nullable = false, length = 45)
+    @Column(name = "sku_variante", nullable = false, length = 45)
     private String skuVariantes;
 
     @Column(name = "atributos", nullable = false, length = 45)
     private String atributos;
 
-    @Column(name = "stock_variantes", nullable = false, length = 45)
+    @Column(name = "stock_variante", nullable = false, length = 45)
     private String stockVariantes;
 
     public Variantes(){}
