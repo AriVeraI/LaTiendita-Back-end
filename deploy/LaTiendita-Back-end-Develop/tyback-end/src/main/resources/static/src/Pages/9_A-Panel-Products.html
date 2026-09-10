@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Página responsiva -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Referencia a archivos con estilos -->
+    <link rel="stylesheet" href="../Styles/style.css" />
+    <link rel="stylesheet" href="../Styles/1_index.css" />
+    <!-- Enlaces a librerías externas por CDN (FontAwesome, Bootstrap Icons y Bootstrap CSS) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Importación de fuentes tipográficas de Google Fonts (Fredoka y Montserrat) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Título de la pestaña del navegador -->
+    <title>A-Panel-Products</title>
+    <link rel="stylesheet" href="../Styles/11_predeploy.css">
+</head>
+
+  <body>
+    <!------------------------------------------------ NAVBAR --------------------------------------------->
+    <header id="navbar2" class="main-header"></header>
+
+    <!--------------------------------------PRINCIPAL----------------------------------------->
+    <main>
+      <section class="mx-5 my-3">
+        <div class="row">
+          <!-- COLUMNA DEL MENÚ LATERAL -->
+          <div class="col-lg-3 mb-3">
+            <div class="p-3 bg-white rounded shadow-sm">
+              <!-- SECCIÓN: PANEL -->
+              <small
+                class="text-muted fw-bold text-uppercase px-3"
+                style="font-size: 0.75rem"
+                >Panel</small
+              >
+              <ul id="admin-menu" class="nav flex-column mt-2 mb-4">
+                <li class="nav-item">
+                  <a
+                    class="nav-link text-dark py-2 menu-link"
+                    href="9_A-Panel-Estadistica.html"
+                    >Estadísticas</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link text-white rounded-pill px-3 py-2 menu-link active-custom"
+                    style="background-color: #c86c7c"
+                    href="9_A-Panel-Products.html"
+                    >Mis productos</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link text-dark py-2 menu-link"
+                    href="9_A-Panel-Products-Add.html"
+                    >Agregar producto</a
+                  >
+                </li>
+              </ul>
+
+              <!-- SECCIÓN: TIENDA -->
+              <small
+                class="text-muted fw-bold text-uppercase px-3"
+                style="font-size: 0.75rem"
+                >Tienda</small
+              >
+              <ul class="nav flex-column mt-2 mb-4">
+                <li class="nav-item">
+                  <a
+                    class="nav-link text-dark py-2 menu-link"
+                    href="9_A-Store-Orders.html"
+                    >Pedidos</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link text-dark py-2 menu-link"
+                    href="9_A-Store-Clients.html"
+                    >Clientes</a
+                  >
+                </li>
+              </ul>
+
+              <!-- SECCIÓN: CONFIGURACIÓN -->
+              <small
+                class="text-muted fw-bold text-uppercase px-3"
+                style="font-size: 0.75rem"
+                >Configuración</small
+              >
+              <ul class="nav flex-column mt-2">
+                <li class="nav-item">
+                  <a
+                    class="nav-link text-dark py-2 menu-link"
+                    href="9_A-Settings-Admin.html"
+                    >Administradores</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link text-dark py-2 menu-link"
+                    href="9_A-Settings-Jewelry-Categories.html"
+                    >Categorías</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link text-dark py-2 menu-link"
+                    href="9_A-Settings-Store.html"
+                    >Config. Tienda</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- COLUMNA PRINCIPAL: MIS PRODUCTOS -->
+          <div class="col-lg-9">
+            <!-- Encabezado de la sección y botón de agregar -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <div>
+                <h3 class="fw-bold text-dark mb-1">Mis productos</h3>
+                <!-- Añadimos un id al contador para actualizarlo con la cantidad real de MySQL -->
+                <p class="text-muted mb-0 small" id="total-productos-contador">
+                  Cargando productos...
+                </p>
+              </div>
+              <a
+                href="9_A-Panel-Products-Add.html"
+                class="btn text-white px-4 py-2 rounded-pill fw-bold shadow-sm"
+                style="background-color: #C66271"
+              >
+                + Agregar producto
+              </a>
+            </div>
+
+            <!-- Barra de búsqueda -->
+            <div class="mb-4">
+              <!-- Agregamos un id para que el administrador pueda buscar en tiempo real -->
+              <input
+                type="text"
+                id="admin-search-products"
+                class="form-control rounded-pill px-4 py-2 border-0 shadow-sm"
+                placeholder="Buscar producto por nombre..."
+              />
+            </div>
+
+            <!-- AJUSTE CRUCIAL: Contenedor vacío con ID donde el script inyectará las tarjetas -->
+            <div
+              id="contenedor-tabla-productos"
+              class="d-flex flex-column gap-3"
+            >
+              <!-- Los productos de la base de datos se pintarán aquí de forma automática -->
+            </div>
+          </div>
+          <!-- Fin del col-lg-9 -->
+        </div>
+        <!-- Fin del row -->
+      </section>
+    </main>
+
+    <!-- LLAMADA A LOS SCRIPTS (Aseguramos Bootstrap Bundle y tus lógicas del panel) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../JScript/RuntimeConfig.js"></script>
+    <script src="../JScript/ApiConfig.js"></script>
+    <script src="../JScript/StoreConfig.js"></script>
+    <script src="../JScript/Auth.js"></script>
+    <script src="../JScript/Navbar_Footer.js"></script>
+    <script src="../JScript/Admin-Panel.js"></script>
+  </body>
+</html>
