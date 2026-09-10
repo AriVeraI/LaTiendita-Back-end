@@ -4,8 +4,8 @@ WORKDIR /app
 COPY . .
 RUN gradle bootJar --no-daemon
 
-# 2. Etapa de ejecución ligera
-FROM openjdk:17-jdk-slim
+# 2. Etapa de ejecución ligera con Eclipse Temurin JDK 17
+FROM eclipse-temurin:17-jdk-alpine
 WORKDIR /app
 COPY --from=build /app/build/libs/*.jar app.jar
 EXPOSE 8080
